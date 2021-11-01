@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shop Bán Giày</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+</head>
+<body>
+<div class="header">
+    <div class="info-header1">
+    <span style="width: 40%;text-align: center"><i class="material-icons location">
+        &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons phone">&#xe0b0;</i>034 566 5402</span>
+        <i class="fa fb-icon">&#xf082;</i>
+    </div>
+    <div class="info-header" style="position: relative;top: -2.5em; left: 4em;z-index: 1!important;">
+        <img th:src="@{../image/logo.png}" width="200" height="200" class="logo" alt="logo">
+        <form style="position: relative;top: 5em">
+            <label for="search-text"></label><input type="search" id="search-text" placeholder="Tìm kiếm...">
+            <input type="button" class="fa" id="search-button" value="&#xf002;">
+        </form>
+        <div class="cart">
+            <i class="fa">&#xf23d;</i>
+            <h6 class="cart-sl">1</h6>
+        </div>
+    </div>
+</div>
+<div class="top-nav" style="background-color: rgb(38, 42, 43);">
+    <a href="https://google.com" class="active">Trang Chủ</a>
+    <a href="https://google.com">giày nam</a>
+    <a href="https://google.com">giày nữ</a>
+    <a href="https://google.com">giày trẻ em</a>
+    <a href="https://google.com">phụ kiện</a>
+    <a href="https://google.com">thương hiệu</a>
+</div>
+
+<div style="display: grid;grid-template-columns: 60% 30%;">
+    <img th:src="'../'+${sanpham.getLinkAnh()}" style="max-width: 90%;">
+    <div><br><h1 style="display: inline">Tên sản phẩm: </h1><h1 style="display: inline" th:text="${sanpham.getTen()}"></h1><br>
+        <h3 style="display: inline">Giá: </h3><h3 style="display: inline" th:text="${sanpham.getGia()}"></h3><h3> $</h3>
+        <h4 >Mô tả: </h4>
+        <h4 th:text="${sanpham.getMoTa()}"></h4></div>
+</div>
+
+
+<div class="footer">
+    <div class="list-footer"><h2>THÔNG TIN LIÊN HỆ</h2>
+        <ul>
+            <li>Trương Định, Hai Bà Trưng, Hà Nội</li>
+            <li>0345665402</li>
+            <li>tungnguyensnk@gmail.com</li>
+        </ul>
+    </div>
+    <div class="list-footer"><h2>HỖ TRỢ</h2>
+        <ul>
+            <li>Hướng dẫn mua hàng</li>
+            <li>Hướng dẫn thanh toán</li>
+            <li>Chính sách bảo hành</li>
+        </ul>
+    </div>
+    <div class="list-footer"><h2>LIÊN KẾT</h2>
+        <ul>
+            <li>Giày Nam</li>
+            <li>Giày Nữ</li>
+            <li>Giày Trẻ Em</li>
+            <li>Phụ Kiện</li>
+        </ul>
+    </div>
+    <div class="copyright">&copy; Bản quyền thuộc về うれしい。</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shop Bán Giày</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+<div class="header">
+    <div class="info-header1">
+    <span style="width: 40%;text-align: center"><i class="material-icons location">
+        &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons phone">&#xe0b0;</i>034 566 5402</span>
+        <i class="fa fb-icon">&#xf082;</i>
+    </div>
+    <div class="info-header" style="position: relative;top: -2.5em; left: 4em;z-index: 1!important;">
+        <img th:src="@{image/logo.png}" width="200" height="200" class="logo" alt="logo">
+        <form style="position: relative;top: 5em">
+            <label for="search-text"></label><input type="search" id="search-text" placeholder="Tìm kiếm...">
+            <input type="button" class="fa" id="search-button" value="&#xf002;">
+        </form>
+        <div class="cart">
+            <i class="fa">&#xf23d;</i>
+            <h6 class="cart-sl">1</h6>
+        </div>
+    </div>
+</div>
+<div class="top-nav" style="background-color: rgb(38, 42, 43);">
+    <a href="https://google.com" class="active">Trang Chủ</a>
+    <a href="https://google.com">giày nam</a>
+    <a href="https://google.com">giày nữ</a>
+    <a href="https://google.com">giày trẻ em</a>
+    <a href="https://google.com">phụ kiện</a>
+    <a href="https://google.com">thương hiệu</a>
+</div>
+<div class="banner-area" id="banner-area" onmouseleave="mouseOutBanner()">
+    <i id="next-button-left" class="fa next-icon-left" style="position: relative;left: 5%">&#xf137;</i>
+    <i id="next-button-right" class="fa next-icon-right" style="position: relative;left: 90%">&#xf138;</i>
+    <div class="slide">
+        <div class="description">
+            <h1>Classic</h1>
+            <p>Ra mắt đã khá lâu nhưng mẫu giày này vẫn chiếm trọn trái tim của những người dùng. Nó sở hữu vẻ ngoài
+                sang
+                trọng với nội thất vô cùng ấn tượng. Phần đế được trang bị chức năng chống sốc giúp quá trình hoạt động
+                đảm
+                bảo sự thoải mái.</p>
+            <a href="https://google.com" class="link-description">Xem sản phẩm</a>
+        </div>
+        <img th:src="@{image/banner1.png}" alt="banner1">
+    </div>
+    <div class="slide">
+        <div class="description">
+            <h1>Nike Air Max Excee</h1>
+            <p>Phong cách cổ điển đáp ứng sự thoải mái cuối cùng trong Giày thể thao Air Max Excee của Nike! Từ chạy
+                trong công viên, dắt chó đi dạo hoặc chạy một số việc vặt nhanh xung quanh thị trấn, Air Max Excee là
+                người bạn đồng hành hoàn hảo.</p>
+            <a href="https://google.com" class="link-description">Xem sản phẩm</a>
+        </div>
+        <img th:src="@{image/banner2.png}" alt="banner2" style="transform: scale(1.3)">
+    </div>
+    <div class="slide">
+        <div class="description">
+            <h1>Puma Axelion</h1>
+            <p>Lên trò chơi của bạn với Axelion. Thạch thảo thoáng khí đan phía trên kết hợp với một chân TPU ở giữa
+                chân để hỗ trợ và kiểm soát thông qua các chuyển động. Axelion là một trò chơi thực sự...</p>
+            <a href="https://google.com" class="link-description">Xem sản phẩm</a>
+        </div>
+        <img th:src="@{image/banner3.png}" alt="banner3" style="transform: scale(1.3)">
+    </div>
+</div>
+<div class="trend-area">
+    <div class="trend-item">
+        <div class="trend-content"><h3><span
+                style="border-bottom: 2px solid darkred;padding-bottom: 12px;margin-bottom: 10px"> Xu Hư</span>ớng
+            2021</h3>
+            <h2 style="font-size: 36px;margin: 0">GIÀY NAM</h2></div>
+        <img th:src="@{image/xuhuongnam.jpg}" class="trend-image" style="object-position: 10% 50%;"
+             alt="Xu Hướng Nam"></div>
+    <div class="trend-item">
+        <div class="trend-content"><h3><span
+                style="border-bottom: 2px solid darkred;padding-bottom: 12px;margin-bottom: 10px"> Xu Hư</span>ớng
+            2021</h3>
+            <h2 style="font-size: 36px;margin: 0">GIÀY NỮ</h2></div>
+        <img th:src="@{image/xuhuongnu.jpg}" class="trend-image" style="object-position: 10% 100%;"
+             alt="Xu Hướng Nữ"></div>
+</div>
+<div class="list-item">
+    <h2 style="grid-column: 1/4">Top Sản phẩm</h2>
+    <th:block th:each="item : ${items}">
+        <div class="item-in-list">
+            <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${item.getLinkAnh()}" class="img-in-list"></a>
+            <h3 th:text="${item.getTen()}" style="text-align: center;margin: 5px"></h3>
+            <h3 th:text="${item.getGia()} +' $'" style="text-align: center;color: rgb(117, 76, 48);margin: 5px"></h3>
+            <button class="button-in-list"><h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3></button>
+        </div>
+    </th:block>
+</div>
+<div class="footer">
+    <div class="list-footer"><h2>THÔNG TIN LIÊN HỆ</h2>
+        <ul>
+            <li>Trương Định, Hai Bà Trưng, Hà Nội</li>
+            <li>0345665402</li>
+            <li>tungnguyensnk@gmail.com</li>
+        </ul>
+    </div>
+    <div class="list-footer"><h2>HỖ TRỢ</h2>
+        <ul>
+            <li>Hướng dẫn mua hàng</li>
+            <li>Hướng dẫn thanh toán</li>
+            <li>Chính sách bảo hành</li>
+        </ul>
+    </div>
+    <div class="list-footer"><h2>LIÊN KẾT</h2>
+        <ul>
+            <li>Giày Nam</li>
+            <li>Giày Nữ</li>
+            <li>Giày Trẻ Em</li>
+            <li>Phụ Kiện</li>
+        </ul>
+    </div>
+    <div class="copyright">&copy; Bản quyền thuộc về うれしい。</div>
+</div>
+<script th:src="@{js/main.js}"></script>
+</body>
+</html>
