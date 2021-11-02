@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<!doctype html >
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:with="base = ${#httpServletRequest.scheme + '://' + #httpServletRequest.serverName + ':' + #httpServletRequest.serverPort}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,17 +9,17 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{${base}+'/css/style.css'}">
 </head>
 <body>
-<div class="header">
+<div class="header" th:fragment="header">
     <div class="info-header1">
     <span style="width: 40%;text-align: center"><i class="material-icons location">
         &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons phone">&#xe0b0;</i>034 566 5402</span>
         <i class="fa fb-icon">&#xf082;</i>
     </div>
     <div class="info-header" style="position: relative;top: -2.5em; left: 4em;z-index: 1!important;">
-        <img th:src="@{image/logo.png}" width="200" height="200" class="logo" alt="logo">
+        <img th:src="@{${base}+'/image/logo.png'}" width="200" height="200" class="logo" alt="logo">
         <form style="position: relative;top: 5em">
             <label for="search-text"></label><input type="search" id="search-text" placeholder="Tìm kiếm...">
             <input type="button" class="fa" id="search-button" value="&#xf002;">
@@ -30,13 +30,13 @@
         </div>
     </div>
 </div>
-<div class="top-nav" style="background-color: rgb(38, 42, 43);">
-    <a href="https://google.com" class="active">Trang Chủ</a>
-    <a href="https://google.com">giày nam</a>
-    <a href="https://google.com">giày nữ</a>
-    <a href="https://google.com">giày trẻ em</a>
-    <a href="https://google.com">phụ kiện</a>
-    <a href="https://google.com">thương hiệu</a>
+<div class="top-nav" style="background-color: rgb(38, 42, 43);" th:fragment="navbar">
+    <a th:href="@{${base}+'/'}" th:class="${active== 'index'} ? 'active' : '' ">Trang Chủ</a>
+    <a th:href="@{${base}+'/giaynam'}" th:class="${active== 'giaynam'} ? 'active' : '' ">giày nam</a>
+    <a th:href="@{${base}+'/giaynu'}" th:class="${active== 'giaynu'} ? 'active' : '' ">giày nữ</a>
+    <a th:href="@{${base}+'/giaytreem'}" th:class="${active== 'giaytreem'} ? 'active' : '' ">giày trẻ em</a>
+    <a th:href="@{${base}+'/phukien'}" th:class="${active== 'phukien'} ? 'active' : '' ">phụ kiện</a>
+    <a th:href="@{${base}+'/thuonghieu'}" th:class="${active== 'thuonghieu'} ? 'active' : '' ">thương hiệu</a>
 </div>
 <div class="banner-area" id="banner-area" onmouseleave="mouseOutBanner()">
     <i id="next-button-left" class="fa next-icon-left" style="position: relative;left: 5%">&#xf137;</i>
@@ -51,7 +51,7 @@
                 bảo sự thoải mái.</p>
             <a href="https://google.com" class="link-description">Xem sản phẩm</a>
         </div>
-        <img th:src="@{image/banner1.png}" alt="banner1">
+        <img th:src="@{${base}+'/image/banner1.png'}" alt="banner1">
     </div>
     <div class="slide">
         <div class="description">
@@ -61,7 +61,7 @@
                 người bạn đồng hành hoàn hảo.</p>
             <a href="https://google.com" class="link-description">Xem sản phẩm</a>
         </div>
-        <img th:src="@{image/banner2.png}" alt="banner2" style="transform: scale(1.3)">
+        <img th:src="@{${base}+'/image/banner2.png'}" alt="banner2" style="transform: scale(1.3)">
     </div>
     <div class="slide">
         <div class="description">
@@ -70,7 +70,7 @@
                 chân để hỗ trợ và kiểm soát thông qua các chuyển động. Axelion là một trò chơi thực sự...</p>
             <a href="https://google.com" class="link-description">Xem sản phẩm</a>
         </div>
-        <img th:src="@{image/banner3.png}" alt="banner3" style="transform: scale(1.3)">
+        <img th:src="@{${base}+'/image/banner3.png'}" alt="banner3" style="transform: scale(1.3)">
     </div>
 </div>
 <div class="trend-area">
@@ -79,28 +79,30 @@
                 style="border-bottom: 2px solid darkred;padding-bottom: 12px;margin-bottom: 10px"> Xu Hư</span>ớng
             2021</h3>
             <h2 style="font-size: 36px;margin: 0">GIÀY NAM</h2></div>
-        <img th:src="@{image/xuhuongnam.jpg}" class="trend-image" style="object-position: 10% 50%;"
+        <img th:src="@{${base}+'/image/xuhuongnam.jpg'}" class="trend-image" style="object-position: 10% 50%;"
              alt="Xu Hướng Nam"></div>
     <div class="trend-item">
         <div class="trend-content"><h3><span
                 style="border-bottom: 2px solid darkred;padding-bottom: 12px;margin-bottom: 10px"> Xu Hư</span>ớng
             2021</h3>
             <h2 style="font-size: 36px;margin: 0">GIÀY NỮ</h2></div>
-        <img th:src="@{image/xuhuongnu.jpg}" class="trend-image" style="object-position: 10% 100%;"
+        <img th:src="@{${base}+'/image/xuhuongnu.jpg'}" class="trend-image" style="object-position: 10% 100%;"
              alt="Xu Hướng Nữ"></div>
 </div>
 <div class="list-item">
     <h2 style="grid-column: 1/4">Top Sản phẩm</h2>
     <th:block th:each="item : ${items}">
         <div class="item-in-list">
-            <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${item.getLinkAnh()}" class="img-in-list"></a>
+            <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${base}+'/'+${item.getLinkAnh()}" class="img-in-list"></a>
             <h3 th:text="${item.getTen()}" style="text-align: center;margin: 5px"></h3>
             <h3 th:text="${item.getGia()} +' $'" style="text-align: center;color: rgb(117, 76, 48);margin: 5px"></h3>
-            <button class="button-in-list"><h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3></button>
+            <button class="button-in-list" th:onclick="'addCart('+${item.getMaSanPham()}+')'">
+                <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
+            </button>
         </div>
     </th:block>
 </div>
-<div class="footer">
+<div class="footer" th:fragment="footer">
     <div class="list-footer"><h2>THÔNG TIN LIÊN HỆ</h2>
         <ul>
             <li>Trương Định, Hai Bà Trưng, Hà Nội</li>
@@ -125,6 +127,7 @@
     </div>
     <div class="copyright">&copy; Bản quyền thuộc về うれしい。</div>
 </div>
-<script th:src="@{js/main.js}"></script>
+<script th:src="@{${base}+'/js/main.js'}"></script>
+<script th:src="@{${base}+'/js/cookie.js'}"></script>
 </body>
 </html>
