@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:with="base = ${#httpServletRequest.scheme + '://' + #httpServletRequest.serverName + ':' + #httpServletRequest.serverPort}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
+    <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${base}+'/css/sub.css'">
+</head>
+<body>
+<div th:replace="index :: header"></div>
+<div th:replace="index :: navbar"></div>
+
+<div class="gioithieu">
+    <img th:src="${base}+'/image/gt.webp'" alt="gioithieu">
+    <div>
+        <h2>Giới thiệu về chúng tôi</h2>
+        <p>Giày hay giầy là một vật dụng đi vào bàn chân con người để bảo vệ và làm êm chân trong khi thực hiện các hoạt
+            động khác nhau. Giày cũng được sử dụng như một món đồ trang trí. Thiết kế của giày đã đa dạng và phong phú
+            vô cùng theo thời gian, văn hoá và mục đích sử dụng. </p>
+    </div>
+</div>
+<div class="baodam">
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt1.png'">
+        <div class="des"><h2>Hàng chính hãng</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p>
+        </div>
+    </div>
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt2.png'">
+        <div class="des"><h2>Sản phẩm mới 100%</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p></div>
+    </div>
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt3.png'">
+        <div class="des"><h2>Bảo hành 12 tháng</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p></div>
+    </div>
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt4.png'">
+        <div class="des"><h2>Đổi trả trong vòng 7 ngày</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p></div>
+    </div>
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt5.png'">
+        <div class="des"><h2>Miễn phí giao hàng</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p></div>
+    </div>
+    <div class="subbd">
+        <img class="icon-bd" th:src="${base}+'/image/gt6.png'">
+        <div class="des"><h2>Giá cả hợp lý</h2>
+            <p>Hiện nay, giày là phụ kiện thời trang thiết yếu đối với những người hiện đại ngày nay</p></div>
+    </div>
+</div>
+<div th:replace="index :: footer"></div>
+</body>
+</html>

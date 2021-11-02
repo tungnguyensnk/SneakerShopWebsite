@@ -1,0 +1,19 @@
+.info {
+    display: grid;
+    grid-template-columns: 35% 30%;
+    justify-content: center;
+    padding: 30px 50px;
+}
+.img-info {
+    max-width: 100%;
+    object-fit: contain;
+    border-bottom: #736b5e solid 1px;
+    padding-bottom: 30px;
+}
+.info-text {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    border-bottom: #736b5e solid 1px;
+}

@@ -30,7 +30,7 @@ body {
 }
 
 .fb-icon {
-    font-size: 24px;
+    font-size: 30px;
     position: relative;
     top: 5px;
     width: 60%;
@@ -57,7 +57,7 @@ input[type="search"] {
     color: rgb(232, 230, 227);
 }
 
-input[type="button"] {
+#search-button {
     box-sizing: border-box;
     width: 4em;
     border-top-right-radius: 5px;
@@ -119,6 +119,7 @@ input:focus {
     z-index: 30 !important;
 }
 
+
 .active {
     color: rgb(202, 156, 125) !important;
     border-bottom: 1px solid rgb(113, 73, 46);
@@ -128,7 +129,15 @@ input:focus {
     color: rgb(202, 156, 125);
     border-bottom: 1px solid rgb(113, 73, 46);
 }
-
+.footer-link {
+    color: rgb(232, 230, 227) !important;
+    text-decoration: none;
+    cursor: pointer;
+}
+.footer-link:hover {
+    color: rgb(202, 156, 125)!important;
+    //border-bottom: 1px solid rgb(113, 73, 46);
+}
 .banner-area {
     position: relative;
     background-color: rgb(34 34 34);
@@ -174,6 +183,7 @@ img[src*="banner"] {
     border: 1px solid rgb(232, 230, 227);
     padding: 10px 40px 10px 40px;
     border-radius: 7px;
+    box-sizing: border-box;
 }
 
 .link-description:hover {
@@ -381,4 +391,23 @@ ul li {
     border: none;
     color: rgb(232, 230, 227);
     cursor: pointer;
+}
+
+.cart-pop{
+    position: absolute;
+    height: auto;
+    /*max-height: 300px;*/
+    overflow-y: auto;
+    width: 20%;
+    left: 75%;
+    top: 120px;
+    background-color: rgb(24, 26, 27);
+    box-shadow: rgb(0 0 0 / 15%) 1px 1px 15px;
+    border: 2px solid #ddd;
+    z-index: 31 !important;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }

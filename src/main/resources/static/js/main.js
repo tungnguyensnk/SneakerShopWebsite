@@ -100,3 +100,4 @@ buttonLeft.onclick = () => {
         slides[slideIndex - 1].style.transition = "transform 1s;";
     }, 250);
 }
+

@@ -9,11 +9,24 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
-    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${base}+'/css/info.css'">
 </head>
 <body>
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
+<div class="info">
+    <img th:src="${base}+'/'+${sanpham.getLinkAnh()}" class="img-info">
+    <div class="info-text">
+        <h2 th:text="${sanpham.getTen()}"></h2>
+        <h2 style="color: rgb(202, 156, 125) " th:text="${sanpham.getGia()}+' $'"></h2>
+        <p th:text="'Mã sản phẩm: '+${sanpham.getMaSanPham()}"></p>
+        <button class="button-in-list" style="margin: 0 10%" th:onclick="'addCart('+${sanpham.getMaSanPham()}+')'">
+            <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
+        </button>
+    </div>
+    <div style="grid-column: 1/3;border: #736b5e solid 1px;margin-top: 30px;padding: 20px"><h2>Mô Tả</h2><p th:text="${sanpham.getMoTa()}"></p> </div>
+</div>
 <div th:replace="index :: footer"></div>
 </body>
 </html>
