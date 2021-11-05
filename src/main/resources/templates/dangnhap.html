@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:with="base = ${#httpServletRequest.scheme + '://' + #httpServletRequest.serverName + ':' + #httpServletRequest.serverPort}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title th:text="${text}"></title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
+  <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+</head>
+<body>
+<div th:replace="index :: header"></div>
+<div th:replace="index :: navbar"></div>
+<div>
+  <h3 style="text-align: center">Đăng Nhập</h3>
+  <form class="form">
+    <label for="username"></label>
+    <input type="text" id="username" name="user" placeholder="Tài Khoản" autocomplete="off">
+    <label for="password"></label>
+    <input type="password" id="password" name="pass" placeholder="Mật Khẩu" autocomplete="off">
+    <input type="button" id="buttondn" value="Đăng Nhập" onclick="login()">
+  </form>
+  <h4 style="text-align: center" id="thong-bao"></h4>
+</div>
+<div th:replace="index :: footer"></div>
+<script th:src="${base}+'/js/dangnhap.js'"></script>
+</body>
+</html>

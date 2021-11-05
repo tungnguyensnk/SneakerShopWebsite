@@ -5,54 +5,64 @@ body {
 }
 
 .header {
+    display: flex;
+    flex-direction: column;
     background-color: rgb(38, 42, 43);
-    height: 9em;
-    overflow: hidden;
+    min-height: 9em;
+}
+
+.search-ui {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    align-items: center;
+    min-height: 4.5em;
+    overflow: visible;
 }
 
 .info-header {
-    display: flex;
-    flex-direction: row;
-    height: 5em;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    min-height: 2em;
+    z-index: 3;
 }
 
-.info-header1 {
-    display: flex;
-    flex-direction: row;
-    height: 2em;
+.info {
+    grid-column: 2/5;
+    margin: 5px;
 }
 
-.location, .phone {
+.lp {
     color: rgb(232, 230, 227);
-    padding: 5px;
+    margin: 5px;
     position: relative;
     top: 5px;
 }
 
-.fb-icon {
-    font-size: 30px;
-    position: relative;
-    top: 5px;
-    width: 60%;
-    text-align: right;
-    padding-right: 10%;
+.tab-header {
+    grid-column: 8/9;
+    margin: 15px;
 }
 
 .logo {
-    flex-basis: 33%;
-    align-items: center;
+    grid-column: 3/4;
     object-fit: scale-down;
 }
 
-input[type="search"] {
+.searchbar {
+    margin-left: 20%;
+    grid-column: 4/7;
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="search"], input[type="password"], input[type="text"], input[type="number"] {
     box-sizing: border-box;
     border: 1px solid rgb(58, 62, 65);
     padding: 0 0.75em;
     font-size: 0.75em;
     height: 3.4em;
     width: 30em;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-radius: 5px;
     background-color: rgb(24, 26, 27);
     color: rgb(232, 230, 227);
 }
@@ -78,26 +88,44 @@ input:focus {
 
 .cart {
     position: relative;
-    top: 2.8em;
-    left: 23%;
+    grid-column: 7/9;
+    padding-left: 20%;
     font-size: 30px;
     cursor: pointer;
+    overflow: visible;
 }
 
 .cart-sl {
-    height: 16px;
-    width: 16px;
-    padding-top: 2px;
+    margin: 0;
+    width: 13px;
+    top: 20px;
     box-sizing: border-box;
     text-align: center;
     position: absolute;
-    font-size: x-small;
-    top: 0;
-    left: -5px;
+    font-size: small;
     background-color: red;
     border-radius: 50%;
     color: #181a1b;
     visibility: hidden;
+}
+
+.cart-pop {
+    position: absolute;
+    height: auto;
+    font-size: 16px;
+    overflow-y: auto;
+    min-width: 300px;
+    max-width: 20%;
+    left: -100px;
+    background-color: rgb(24, 26, 27);
+    box-shadow: rgb(0 0 0 / 15%) 1px 1px 15px;
+    border: 2px solid #ddd;
+    z-index: 31 !important;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .top-nav {
@@ -129,22 +157,22 @@ input:focus {
     color: rgb(202, 156, 125);
     border-bottom: 1px solid rgb(113, 73, 46);
 }
+
 .footer-link {
     color: rgb(232, 230, 227) !important;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
 }
+
 .footer-link:hover {
-    color: rgb(202, 156, 125)!important;
-    //border-bottom: 1px solid rgb(113, 73, 46);
+    color: rgb(202, 156, 125) !important;
+    border-bottom: 1px solid rgb(113, 73, 46);
 }
+
 .banner-area {
     position: relative;
     background-color: rgb(34 34 34);
     height: 600px;
-    /*display: flex;
-    justify-content: flex-end;
-    align-items: center;*/
     overflow: hidden;
     z-index: 5 !important;
 }
@@ -393,21 +421,49 @@ ul li {
     cursor: pointer;
 }
 
-.cart-pop{
-    position: absolute;
-    height: auto;
-    /*max-height: 300px;*/
-    overflow-y: auto;
-    width: 20%;
-    left: 75%;
-    top: 120px;
-    background-color: rgb(24, 26, 27);
-    box-shadow: rgb(0 0 0 / 15%) 1px 1px 15px;
-    border: 2px solid #ddd;
-    z-index: 31 !important;
-    visibility: hidden;
+.form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
 
+#buttondn {
+    margin: 20px 0;
+    border: 1px solid rgb(232, 230, 227);
+    padding: 10px 40px 10px 40px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#buttondn:hover {
+    background-color: rgb(113, 73, 46);
+}
+
+#password,#ten,#sdt,#diachi {
+    margin-top: 10px;
+}
+
+.gio-hang {
+    width: 40%;
+    margin: 0 30%;
+}
+.item-don-hang {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.img-don-hang {
+    max-width: 40%;
+    object-fit: contain;
+    margin: 10px 0;
+}
+
+.nhom-hang {
+    border: 1px solid rgb(77, 83, 86);
+    border-radius: 10px;
+    margin: 10px 30%;
 }

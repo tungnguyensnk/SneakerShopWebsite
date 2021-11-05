@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title th:text="'Tìm Kiếm - ' + ${text}"></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
@@ -17,7 +17,7 @@
 <div th:replace="index :: navbar"></div>
 <div class="list-item" style="grid-template-columns: 22% 22% 22% 22%;">
     <h2 style="grid-column: 1/5">Kết quả cho: <span th:text="${text}"></span></h2>
-    <th:block th:each="item : ${items}">
+    <th:block th:each="item : ${ds}">
         <div class="item-in-list">
             <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${base}+'/'+${item.getLinkAnh()}"
                                                                  class="img-in-list"></a>
@@ -29,7 +29,7 @@
         </div>
     </th:block>
 </div>
-
+<h3 style="text-align: center" th:text="(${ds.size()}==0) ? 'Không có sản phẩm nào.' : ''"></h3>
 <div th:replace="index :: footer"></div>
 </body>
 </html>

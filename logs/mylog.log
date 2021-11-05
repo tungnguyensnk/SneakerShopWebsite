@@ -1,0 +1,15 @@
+2021-11-04 21:46:27.245  INFO 8936 --- [main] com.tung.projectdb.ProjectDbApplication  : Starting ProjectDbApplication using Java 17.0.1 on DESKTOP-264OC3H with PID 8936 (E:\Java\ProjectDB\target\classes started by tungn in E:\Java\ProjectDB)
+2021-11-04 21:46:27.247  INFO 8936 --- [main] com.tung.projectdb.ProjectDbApplication  : No active profile set, falling back to default profiles: default
+2021-11-04 21:46:27.913  INFO 8936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-11-04 21:46:27.919  INFO 8936 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-11-04 21:46:27.920  INFO 8936 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.54]
+2021-11-04 21:46:27.977  INFO 8936 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-11-04 21:46:27.978  INFO 8936 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 689 ms
+2021-11-04 21:46:28.142  INFO 8936 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-11-04 21:46:28.257  INFO 8936 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-11-04 21:46:28.266  INFO 8936 --- [main] com.tung.projectdb.ProjectDbApplication  : Started ProjectDbApplication in 1.315 seconds (JVM running for 1.791)
+2021-11-04 21:47:58.310  INFO 8936 --- [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [1":1}; key=fc1fbddf59b8eda07edba2f4172ebdc62ed4952e334f8bc51a7afca1fb16269f] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-11-04 21:47:58.315  INFO 8936 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-11-04 21:47:58.315  INFO 8936 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-11-04 21:47:58.316  INFO 8936 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

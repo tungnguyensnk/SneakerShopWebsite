@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:with="base = ${#httpServletRequest.scheme + '://' + #httpServletRequest.serverName + ':' + #httpServletRequest.serverPort}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${text}"></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
+    <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+</head>
+<body>
+<div th:replace="index :: header"></div>
+<div th:replace="index :: navbar"></div>
+<div th:unless="${isEmpty}" class="nhom-hang">
+    <h3 style="text-align: center">Thông Tin Giỏ Hàng</h3>
+    <div class="gio-hang">
+        <th:block th:each="dh : ${donhang}">
+            <div class="item-don-hang">
+                <img th:src="${base}+'/'+${dh.getKey().getLinkAnh()}" class="img-don-hang">
+                <div style="display: flex;flex-direction: row;margin-left: 15px"><h4 class="des-don-hang"
+                                                                                     style="margin-right: 5px"
+                                                                                     th:text="${dh.getKey().getTen()} +' '"></h4>
+                    <h4 class="des-don-hang" style="text-decoration: line-through"
+                        th:if="${dh.getValue()}>${dh.getKey().getSoLuong()}" th:text="'(x'+${dh.getValue()}+')'"></h4>
+                    <h4 class="des-don-hang" th:if="${dh.getValue()}<=${dh.getKey().getSoLuong()}"
+                        th:text="'(x'+${dh.getValue()}+')'"></h4>
+                    <h4 class="des-don-hang" th:if="${dh.getValue()}>${dh.getKey().getSoLuong()}"
+                        style="color: crimson;margin-left: 5px" th:text="'(x'+${dh.getKey().getSoLuong()}+')'"></h4>
+                </div>
+            </div>
+        </th:block>
+    </div>
+    <h4 style="text-align: center" th:text="'Tổng tiền: '+${tongtien}+'$'"></h4>
+    <h3 style="text-align: center;margin-bottom: 5px">Thông Tin Người Đặt Hàng</h3>
+    <h4 style="text-align: center;color: chocolate;margin-top: 0">(chỉnh sửa lại trong cài đặt nếu sai)</h4>
+    <h4 style="text-align: center" th:text="'Người đặt hàng: '+${cur.getTen()}"></h4>
+    <h4 style="text-align: center" th:text="'Số điện thoại: '+${cur.getSdt()}"></h4>
+    <h4 style="text-align: center" th:text="'Địa chỉ: '+${cur.getDiaChi()}"></h4>
+    <div>
+        <form class="form">
+            <label for="passwordxm"></label>
+            <input type="password" id="passwordxm" name="passxm" placeholder="Xác Minh Mật Khẩu" autocomplete="off">
+            <input type="button" id="buttondn" value="Yêu Cầu Đặt Hàng" onclick="dathang()">
+        </form>
+    </div>
+    <h4 style="text-align: center" id="thong-bao"></h4>
+</div>
+<div th:if="${isEmpty}">
+    <h3 style="text-align: center">Giỏ hàng trống.</h3>
+</div>
+<div th:replace="index :: footer"></div>
+<script th:inline="javascript">
+    var keydh = [[${keydh}]];
+</script>
+<script th:src="${base}+'/js/dathang.js'"></script>
+</body>
+</html>

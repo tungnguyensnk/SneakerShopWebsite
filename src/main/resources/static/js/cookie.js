@@ -7,7 +7,12 @@ let addCart = masp => {
     if (cart.has(masp)) {
         cart.set(masp, cart.get(masp) + 1);
     } else cart.set(masp, 1);
-    document.cookie = "z=" + JSON.stringify(Object.fromEntries(cart))+"; path=/";
+    const d = new Date();
+    d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
+    let jsonkey = JSON.stringify(Object.fromEntries(cart));
+    jsonkey = jsonkey.substring(1, jsonkey.length - 1);
+    jsonkey = jsonkey.replaceAll(",", "a").replaceAll(":", "b").replaceAll("\"", "c");
+    document.cookie = "z=" + jsonkey + ";expires=" + d.toUTCString() + "; path=/";
     getCookie();
 }
 let createCart = (ma, soLuong) => {
@@ -21,10 +26,16 @@ let createCart = (ma, soLuong) => {
     let buttonX = document.createElement("button");
     buttonX.innerHTML = "Xóa";
     buttonX.onclick = () => {
-        console.log(cart.delete(ma+""));
-        document.cookie = "z=" + JSON.stringify(Object.fromEntries(cart))+"; path=/";
+        cart.delete(ma + "");
+        const d = new Date();
+        d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
+        let jsonkey = JSON.stringify(Object.fromEntries(cart));
+        jsonkey = jsonkey.substring(1, jsonkey.length - 1);
+        jsonkey = jsonkey.replaceAll(",", "a").replaceAll(":", "b").replaceAll("\"", "c");
+        document.cookie = "z=" + jsonkey + ";expires=" + d.toUTCString() + "; path=/";
+        document.cookie = "z=" + jsonkey + "; path=/";
         getCookie();
-        if(cart.size===0){
+        if (cart.size === 0) {
             carSl.style.visibility = "hidden";
             cartPop.style.visibility = "hidden";
         }
@@ -40,7 +51,7 @@ let createCart = (ma, soLuong) => {
     anh.style.objectFit = "contain";
     anh.style.marginRight = "10px";
     anh.style.marginLeft = "7%";
-    ten.appendChild(document.createTextNode(listsp[ma].ten+"   (x"+soLuong+")"));
+    ten.appendChild(document.createTextNode(listsp[ma].ten + "   (x" + soLuong + ")"));
     div.appendChild(anh);
     div.appendChild(ten);
     div.appendChild(buttonX);
@@ -54,25 +65,26 @@ let getCookie = () => {
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
     for (let i = 0; i < ca.length; i++) {
-        ca[i] = ca[i].replaceAll("z=","");
-        if (ca[i].trim().startsWith("{") && !ca[i].trim().startsWith("{}")) {
-            ca[i] = ca[i].trim().substring(1, ca[i].length - 2);
-            let text = ca[i].split(',');
+        if (ca[i].includes("z=") && ca[i].length > 3) {
+            ca[i] = ca[i].replaceAll("z=", "");
+            let text = ca[i].split('a');
             for (let j = 0; j < text.length; j++) {
-                let context = text[j].split(':');
-                let ma = context[0].replaceAll("\"", "").trim() + "";
-                let soLuong =  parseInt(context[1]);
-                cart.set(ma,soLuong);
-                createCart(ma,soLuong);
+                let context = text[j].split('b');
+                let ma = context[0].replaceAll("c", "").trim() + "";
+                let soLuong = parseInt(context[1]);
+                cart.set(ma, soLuong);
+                createCart(ma, soLuong);
             }
 
             const div = document.createElement("div");
-            const buttonX = document.createElement("button");
-            buttonX.innerHTML = "Đặt hàng";
-            buttonX.classList.add("link-description");
-            buttonX.style.color = "#181a1b";
-            buttonX.style.marginBottom = "5px";
-            div.appendChild(buttonX);
+            const buttonDH = document.createElement("button");
+            buttonDH.innerHTML = "Đặt hàng";
+            buttonDH.classList.add("link-description");
+            buttonDH.style.color = "#181a1b";
+            buttonDH.style.marginBottom = "5px";
+            buttonDH.style.cursor = "pointer";
+            buttonDH.onclick = () => location.href = location.protocol + '//' + location.host + "/dathang";
+            div.appendChild(buttonDH);
             element.appendChild(div);
 
         }

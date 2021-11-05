@@ -29,25 +29,32 @@
     <script th:inline="javascript" th:each="item : ${items}">
         listsp.push(new sanPham([[${item.getTen()}]], [[${base}]] + '/' + [[${item.getLinkAnh()}]], [[${item.getGia()}]], [[${item.getMoTa()}]]));
     </script>
-    <div class="info-header1">
-    <span style="width: 40%;text-align: center"><i class="material-icons location">
-        &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons phone">&#xe0b0;</i>034 566 5402</span>
-        <i class="fa fb-icon">&#xf082;</i>
-    </div>
-    <div class="info-header" style="position: relative;top: -2.5em; left: 4em;z-index: 1!important;">
-        <img th:src="@{${base}+'/image/logo.png'}" width="200" height="200" class="logo" alt="logo">
-        <form style="position: relative;top: 5em" th:action="${base}+'/timkiem'" method="get">
-            <label for="search-text"></label>
-            <input type="search" id="search-text" name="t" placeholder="Tìm kiếm..." autocomplete="off">
-            <input type="submit" class="fa" id="search-button" value="&#xf002;">
-        </form>
-        <div class="cart">
-            <i class="fa">&#xf23d;</i>
-            <h6 class="cart-sl">1</h6>
+    <div class="info-header">
+    <span class="info"><i class="material-icons lp">
+        &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons lp">&#xe0b0;</i>034 566 5402</span>
+        <div class="tab-header" th:unless="${isLogin}">
+            <a class="footer-link" th:href="@{${base}+'/dangnhap'}">Đăng Nhập</a><span> / </span>
+            <a class="footer-link" th:href="@{${base}+'/dangky'}">Đăng Ký</a>
+        </div>
+        <div class="tab-header" th:if="${isLogin}">
+            <a th:href="${base}+'/setting'" style="margin-top: 15px;text-transform: uppercase" class="footer-link" th:text="${name}"></a><span> / </span>
+            <a th:href="${base}+'/thoat'" class="footer-link">Đăng Xuất</a>
         </div>
     </div>
-    <div class="cart-pop">
-        <div id="thanh-toan"></div>
+    <div class="search-ui">
+        <img th:src="@{${base}+'/image/logo.png'}" class="logo" alt="logo">
+        <div>
+            <form class="searchbar" th:action="${base}+'/timkiem'" method="get">
+                <label for="search-text"></label>
+                <input type="search" id="search-text" style="border-bottom-right-radius: 0;border-top-right-radius: 0" name="t" placeholder="Tìm kiếm..." autocomplete="off">
+                <input type="submit" class="fa" id="search-button" value="&#xf002;">
+            </form>
+        </div>
+        <div class="cart">
+            <i class="fa" style="position: relative">&#xf23d;<h6 class="cart-sl"></h6></i>
+            <div class="cart-pop">
+            </div>
+        </div>
     </div>
 </div>
 <div class="top-nav" style="background-color: rgb(38, 42, 43);" th:fragment="navbar">

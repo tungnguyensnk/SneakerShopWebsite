@@ -101,3 +101,12 @@ buttonLeft.onclick = () => {
     }, 250);
 }
 
+let thoat = () => {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        this.responseText;
+    }
+    xhttp.open("GET", location.protocol + '//' +location.host +"/thoat");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}

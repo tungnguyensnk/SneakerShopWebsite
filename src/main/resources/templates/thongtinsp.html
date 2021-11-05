@@ -21,6 +21,7 @@
         <h2 th:text="${sanpham.getTen()}"></h2>
         <h2 style="color: rgb(202, 156, 125) " th:text="${sanpham.getGia()}+' $'"></h2>
         <p th:text="'Mã sản phẩm: '+${sanpham.getMaSanPham()}"></p>
+        <p style="margin-top: 0" th:text="'Số lượng còn lại: '+${sanpham.getSoLuong()}+' sản phẩm'"></p>
         <button class="button-in-list" style="margin: 0 10%" th:onclick="'addCart('+${sanpham.getMaSanPham()}+')'">
             <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
         </button>
