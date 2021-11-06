@@ -11,11 +11,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
     <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${base}+'/css/info.css'">
+    <link rel="stylesheet" th:href="@{${base}+'/css/toast.css'}">
 </head>
 <body>
+<div style="position: fixed;top: 10px;right: 10px;z-index: 99;" id="toast"></div>
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
-<h3 style="text-align: center">Đang xây dựng...</h3>
+
+<div>
+    <div class="tabs" style="justify-content: center">
+        <div class="tab-item activ">
+            Đổi Mật Khẩu
+        </div>
+        <div class="tab-item">
+            Đổi Thông Tin
+        </div>
+        <div class="line"></div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane activ">
+            <div class="root-btn">
+                <div class="btn" style="margin: 20px 20%;width: 60%;">
+                    <form class="form" style="margin-top: 20px">
+                        <label for="passwordold"></label>
+                        <input type="password" id="passwordold" name="passold" placeholder="Mật Khẩu Cũ"
+                               autocomplete="off">
+                        <label for="passwordnew"></label>
+                        <input type="password" id="passwordnew" style="margin-top: 10px" name="passnew" placeholder="Mật Khẩu Mới"
+                               autocomplete="off">
+                        <input type="button" id="button1" value="Đổi mật khẩu" onclick="changePass()">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane">
+            <div class="root-btn">
+                <div class="btn" style="margin: 20px 20%;width: 60%;">
+                    <form class="form" style="margin-top: 10px">
+                        <label for="ten"></label>
+                        <input type="text" id="ten" name="ten" placeholder="Tên" th:value="${taikhoan.getTen()}" autocomplete="off">
+                        <label for="sdt"></label>
+                        <input type="text" id="sdt" name="sdt" placeholder="Số Điện Thoại" th:value="${taikhoan.getSdt()}" autocomplete="off">
+                        <label for="diachi"></label>
+                        <input type="text" id="diachi" name="diachi" placeholder="Địa Chỉ" th:value="${taikhoan.getDiaChi()}" autocomplete="off">
+                        <input type="button" id="button2" value="Đổi thông tin" onclick="changeInfo()">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:replace="index :: footer"></div>
+<script th:src="${base}+'/js/caidat.js'"></script>
 </body>
 </html>

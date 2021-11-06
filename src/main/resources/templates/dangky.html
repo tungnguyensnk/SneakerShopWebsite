@@ -11,26 +11,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
   <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+  <link rel="stylesheet" th:href="${base}+'/css/info.css'">
+  <link rel="stylesheet" th:href="@{${base}+'/css/toast.css'}">
 </head>
 <body>
+<div style="position: fixed;top: 10px;right: 10px;z-index: 99;" id="toast"></div>
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
-<div>
-  <h3 style="text-align: center">Đăng Ký</h3>
-  <form class="form">
-    <label for="username"></label>
-    <input type="text" id="username" name="user" placeholder="Tài Khoản" autocomplete="off">
-    <label for="password"></label>
-    <input type="password" id="password" name="pass" placeholder="Mật Khẩu" autocomplete="off">
-    <label for="ten"></label>
-    <input type="text" id="ten" name="ten" placeholder="Họ Tên" autocomplete="off">
-    <label for="sdt"></label>
-    <input type="text" id="sdt" name="sdt" placeholder="Số Điện Thoại" autocomplete="off">
-    <label for="diachi"></label>
-    <input type="text" id="diachi" name="diachi" placeholder="Địa chỉ" autocomplete="off">
-    <input type="button" id="buttondn" value="Đăng Ký" onclick="register()">
-  </form>
-  <h4 style="text-align: center" id="thong-bao"></h4>
+<div class="root-btn">
+  <div class="btn">
+    <h3 style="text-align: center">Đăng Ký</h3>
+    <form class="form">
+      <label for="username"></label>
+      <input type="text" id="username" name="user" placeholder="Tài Khoản" autocomplete="off">
+      <label for="password"></label>
+      <input type="password" id="password" name="pass" placeholder="Mật Khẩu" autocomplete="off">
+      <label for="ten"></label>
+      <input type="text" id="ten" name="ten" placeholder="Họ Tên" autocomplete="off">
+      <label for="sdt"></label>
+      <input type="text" id="sdt" name="sdt" placeholder="Số Điện Thoại" autocomplete="off">
+      <label for="diachi"></label>
+      <input type="text" id="diachi" name="diachi" placeholder="Địa chỉ" autocomplete="off">
+      <input type="button" id="buttondn" value="Đăng Ký" onclick="register()">
+    </form>
+  </div>
 </div>
 <div th:replace="index :: footer"></div>
 <script th:src="${base}+'/js/dangky.js'"></script>

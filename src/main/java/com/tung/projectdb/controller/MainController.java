@@ -288,7 +288,7 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/setting")
+    @GetMapping("/caidat")
     public String setting(Model model, @CookieValue(value = "key", defaultValue = "") String key) {
         model.addAttribute("items", Data.getItems());
         model.addAttribute("active", "index");
@@ -301,6 +301,7 @@ public class MainController {
             model.addAttribute("isLogin", false);
             return "redirect:/dangnhap";
         }
+        model.addAttribute("taikhoan",Data.getTaiKhoanByKey(key));
         return "setting";
     }
 }

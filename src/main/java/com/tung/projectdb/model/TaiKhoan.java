@@ -10,9 +10,13 @@ import java.util.List;
 public class TaiKhoan {
     @Getter
     String user;
-    @Setter
     @Getter
     String pass;
+
+    public void setPass(String pass) {
+        this.pass = pass;
+        this.key = DigestUtils.sha256Hex(user + pass);
+    }
 
     @Setter
     @Getter

@@ -39,8 +39,8 @@ body {
 }
 
 .tab-header {
-    grid-column: 8/9;
-    margin: 15px;
+    grid-column: 7/9;
+    margin: 15px 10%;
 }
 
 .logo {
@@ -49,7 +49,7 @@ body {
 }
 
 .searchbar {
-    margin-left: 20%;
+    margin: 0 5% 0 15%;
     grid-column: 4/7;
     display: flex;
     flex-direction: row;
@@ -61,7 +61,7 @@ input[type="search"], input[type="password"], input[type="text"], input[type="nu
     padding: 0 0.75em;
     font-size: 0.75em;
     height: 3.4em;
-    width: 30em;
+    width: 25vw;
     border-radius: 5px;
     background-color: rgb(24, 26, 27);
     color: rgb(232, 230, 227);
@@ -428,7 +428,7 @@ ul li {
     align-items: center;
 }
 
-#buttondn {
+#buttondn, #button1, #button2 {
     margin: 20px 0;
     border: 1px solid rgb(232, 230, 227);
     padding: 10px 40px 10px 40px;
@@ -437,11 +437,11 @@ ul li {
     cursor: pointer;
 }
 
-#buttondn:hover {
+#buttondn:hover, #button1:hover, #button2:hover {
     background-color: rgb(113, 73, 46);
 }
 
-#password,#ten,#sdt,#diachi {
+#password, #ten, #sdt, #diachi {
     margin-top: 10px;
 }
 
@@ -449,6 +449,7 @@ ul li {
     width: 40%;
     margin: 0 30%;
 }
+
 .item-don-hang {
     display: flex;
     align-items: center;
@@ -462,8 +463,78 @@ ul li {
     margin: 10px 0;
 }
 
-.nhom-hang {
-    border: 1px solid rgb(77, 83, 86);
+#div1 {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    border: 5px solid rgb(60, 60, 60);
     border-radius: 10px;
-    margin: 10px 30%;
+}
+
+#diva1 {
+    position: absolute;
+    width: 90px;
+    height: 20px;
+    border: 5px solid chocolate;
+    border-radius: 10px;
+    background: chocolate;
+    transition: .6s;
+}
+
+#img2 {
+    position: absolute;
+    top: -5px;
+    left: 30px;
+    width: 20px;
+    background-color: chocolate;
+}
+
+#divaa1 {
+    position: absolute;
+    width: 80px;
+    height: 10px;
+    border: 5px solid chocolate;
+    border-radius: 10px;
+    background: chocolate;
+    transition: .6s;
+    z-index: 31;
+}
+
+#divaa1:hover {
+    height: 105px;
+}
+
+#btna1, #btna2, #btna3 {
+    position: absolute;
+    top: 0;
+    background: transparent;
+    width: 76px;
+    color: transparent;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Georgia, serif;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .6s;
+    padding: 2px 0;
+}
+
+#divaa1:hover > #btna1 {
+    top: 25px;
+    color: rgb(232, 230, 227);
+    background: #222222;
+}
+
+#divaa1:hover > #btna2 {
+    top: 53px;
+    color: rgb(232, 230, 227);
+    background: #222222;
+}
+
+#divaa1:hover > #btna3 {
+    top: 81px;
+    color: rgb(232, 230, 227);
+    background: #222222;
 }

@@ -18,6 +18,6 @@ public class DonHang {
         this.ngayDat = ngayDat;
         this.ngayHenGiao = ngayHenGiao;
         tongTien = 0;
-        donHang.forEach((item, soLuong) -> tongTien+=(item.getSoLuong()>soLuong) ? item.getGia()*soLuong : item.getGia()*item.getSoLuong());
+        donHang.forEach((item, soLuong) -> tongTien+=item.getGia()*soLuong);
     }
 }

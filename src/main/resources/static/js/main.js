@@ -17,7 +17,7 @@ function changeRight(n) {
         if (pos === 0) {
             clearInterval(id);
         } else {
-            pos-=2;
+            pos -= 2;
             slides[n].style.left = pos + "%";
         }
     }
@@ -34,7 +34,7 @@ function changeLeft(n) {
         if (pos === 0) {
             clearInterval(id1);
         } else {
-            pos+=2;
+            pos += 2;
             slides[n].style.left = pos + "%";
         }
     }
@@ -43,7 +43,7 @@ function changeLeft(n) {
 
 let slideIndex = 0;
 let changeSlide = () => {
-    if(isClick)
+    if (isClick)
         return;
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
@@ -91,7 +91,7 @@ buttonLeft.onclick = () => {
         slides[i].style.zIndex = "-1";
     }
     slideIndex--;
-    if(slideIndex === 0)
+    if (slideIndex === 0)
         slideIndex = slides.length;
     slides[slideIndex - 1].style.display = "flex";
     slides[slideIndex - 1].style.zIndex = "1";
@@ -103,10 +103,10 @@ buttonLeft.onclick = () => {
 
 let thoat = () => {
     const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
+    xhttp.onload = function () {
         this.responseText;
     }
-    xhttp.open("GET", location.protocol + '//' +location.host +"/thoat");
+    xhttp.open("GET", location.protocol + '//' + location.host + "/thoat");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }

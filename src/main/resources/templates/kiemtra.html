@@ -11,15 +11,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
     <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+    <link rel="stylesheet" th:href="${base}+'/css/info.css'">
+    <link rel="stylesheet" th:href="@{${base}+'/css/toast.css'}">
 </head>
 <body>
+<div style="position: fixed;top: 10px;right: 10px;z-index: 99;" id="toast"></div>
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
 <div th:unless="${isEmpty}">
     <th:block th:each="donhang : ${listonhang}">
-        <div class="nhom-hang">
+        <div class="btn">
             <div class="gio-hang">
-                <h3 style="text-align: center" th:text="'Thông Tin Đơn Hàng #'+${listonhang.size()-listonhang.indexOf(donhang)}"></h3>
+                <h3 style="text-align: center"
+                    th:text="'Thông Tin Đơn Hàng #'+${listonhang.size()-listonhang.indexOf(donhang)}"></h3>
                 <h4 style="text-align: center" th:text="'Trạng thái: '+${donhang.getTrangThaiDon()}"></h4>
                 <h4 style="text-align: center" th:text="'Ngày đặt: '+${donhang.getNgayDat()}"></h4>
                 <h4 style="text-align: center" th:text="'Ngày hẹn giao: '+${donhang.getNgayHenGiao()}"></h4>
@@ -35,6 +39,11 @@
                 </th:block>
             </div>
             <h4 style="text-align: center" th:text="'Tổng tiền: '+${donhang.getTongTien()}+'$'"></h4>
+            <button class="button-in-list"
+                    th:onclick="'huydon('+${listonhang.size()-listonhang.indexOf(donhang)-1}+')'"
+                    th:if="${donhang.getTrangThaiDon()} == 'Chưa xác nhận'">
+                <h3 style="margin: auto;color: aliceblue;">Hủy đơn hàng</h3>
+            </button>
             <h3 style="text-align: center;margin-bottom: 5px">Thông Tin Người Đặt Hàng</h3>
             <h4 style="text-align: center" th:text="'Người đặt hàng: '+${cur.getTen()}"></h4>
             <h4 style="text-align: center" th:text="'Số điện thoại: '+${cur.getSdt()}"></h4>
@@ -45,6 +54,7 @@
 <div th:if="${isEmpty}">
     <h3 style="text-align: center">Không có đơn hàng.</h3>
 </div>
+<script th:src="${base}+'/js/kiemtra.js'"></script>
 <div th:replace="index :: footer"></div>
 </body>
 </html>

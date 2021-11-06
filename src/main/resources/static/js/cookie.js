@@ -7,6 +7,13 @@ let addCart = masp => {
     if (cart.has(masp)) {
         cart.set(masp, cart.get(masp) + 1);
     } else cart.set(masp, 1);
+
+    toast({
+        title: "Thêm thành công!",
+        message: listsp[masp].ten+" đã được cho vào giỏ.",
+        type: "success",
+    });
+
     const d = new Date();
     d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
     let jsonkey = JSON.stringify(Object.fromEntries(cart));
@@ -24,6 +31,8 @@ let createCart = (ma, soLuong) => {
     const ten = document.createElement("h5");
     const anh = document.createElement("img");
     let buttonX = document.createElement("button");
+    anh.onclick = () => location.href = location.protocol + '//' +location.host +"/thongtinsp/"+ma;
+    ten.onclick = () => location.href = location.protocol + '//' +location.host +"/thongtinsp/"+ma;
     buttonX.innerHTML = "Xóa";
     buttonX.onclick = () => {
         cart.delete(ma + "");

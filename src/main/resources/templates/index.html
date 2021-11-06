@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
     <link rel="stylesheet" th:href="@{${base}+'/css/style.css'}">
+    <link rel="stylesheet" th:href="@{${base}+'/css/toast.css'}">
 </head>
 <body>
+<div style="position: fixed;top: 10px;right: 10px;z-index: 99;" id="toast"></div>
 <div class="header" th:fragment="header">
     <script th:inline="javascript">
         class sanPham {
@@ -30,15 +32,28 @@
         listsp.push(new sanPham([[${item.getTen()}]], [[${base}]] + '/' + [[${item.getLinkAnh()}]], [[${item.getGia()}]], [[${item.getMoTa()}]]));
     </script>
     <div class="info-header">
-    <span class="info"><i class="material-icons lp">
-        &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội<i class="material-icons lp">&#xe0b0;</i>034 566 5402</span>
-        <div class="tab-header" th:unless="${isLogin}">
+        <span class="info">
+            <i class="material-icons lp">
+            &#xe0c8;</i>Trương Định, Hai Bà Trưng, Hà Nội
+            <i class="material-icons lp">&#xe0b0;</i>034 566 5402
+        </span>
+        <div class="tab-header" style="grid-column: 8/9;margin: 15px" th:unless="${isLogin}">
             <a class="footer-link" th:href="@{${base}+'/dangnhap'}">Đăng Nhập</a><span> / </span>
             <a class="footer-link" th:href="@{${base}+'/dangky'}">Đăng Ký</a>
         </div>
         <div class="tab-header" th:if="${isLogin}">
-            <a th:href="${base}+'/setting'" style="margin-top: 15px;text-transform: uppercase" class="footer-link" th:text="${name}"></a><span> / </span>
-            <a th:href="${base}+'/thoat'" class="footer-link">Đăng Xuất</a>
+            <div id="div1">
+                <div id="diva1">
+                    <div id="divaa1">
+                        <img id="img2"
+                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Windows_Settings_app_icon.png/768px-Windows_Settings_app_icon.png"
+                             alt="Cài đặt">
+                        <a id="btna1" th:text="'Tài khoản'" th:href="${base}+'/caidat'"></a>
+                        <a id="btna2" th:text="'Đơn hàng'" th:href="${base}+'/kiemtra'"></a>
+                        <a id="btna3" th:text="'Thoát'" th:href="${base}+'/thoat'"></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="search-ui">
@@ -46,11 +61,12 @@
         <div>
             <form class="searchbar" th:action="${base}+'/timkiem'" method="get">
                 <label for="search-text"></label>
-                <input type="search" id="search-text" style="border-bottom-right-radius: 0;border-top-right-radius: 0" name="t" placeholder="Tìm kiếm..." autocomplete="off">
+                <input type="search" id="search-text" style="border-bottom-right-radius: 0;border-top-right-radius: 0"
+                       name="t" placeholder="Tìm kiếm..." autocomplete="off">
                 <input type="submit" class="fa" id="search-button" value="&#xf002;">
             </form>
         </div>
-        <div class="cart">
+        <div class="cart" onclick="showSuccessToast()">
             <i class="fa" style="position: relative">&#xf23d;<h6 class="cart-sl"></h6></i>
             <div class="cart-pop">
             </div>

@@ -3,19 +3,28 @@ let pass = document.getElementById("password");
 let ten = document.getElementById("ten");
 let sdt = document.getElementById("sdt");
 let diachi = document.getElementById("diachi");
-let thongBao = document.getElementById("thong-bao");
 let register = () => {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
         let kq = this.responseText;
         if(kq==="true") {
-            thongBao.innerHTML = "Đăng ký thành công.";
+            toast({
+                title: "Đăng ký thành công",
+                message: "Bạn sẽ được chuyển tới trang đăng nhập.",
+                type: "success",
+            });
+
             setTimeout(() => {
                 location.href = location.protocol + '//' +location.host +"/dangnhap";
-            },1000);
+            },2000);
         }
         else
-            thongBao.innerHTML = "Tài khoản hoặc số điện thoại đã tồn tại.";
+            toast({
+                title: "Lỗi",
+                message: "Tài khoản hoặc số điện thoại đã tồn tại.",
+                type: "error",
+            });
+
     }
     xhttp.open("POST", location.protocol + '//' +location.host +"/dangky");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

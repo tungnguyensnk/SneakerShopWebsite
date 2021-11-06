@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patrick Hand">
     <link rel="stylesheet" th:href="${base}+'/css/style.css'">
+    <link rel="stylesheet" th:href="@{${base}+'/css/toast.css'}">
 </head>
 <body>
+<div style="position: fixed;top: 10px;right: 10px;z-index: 99;" id="toast"></div>
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
 <div class="list-item" style="grid-template-columns: 22% 22% 22% 22%;">
