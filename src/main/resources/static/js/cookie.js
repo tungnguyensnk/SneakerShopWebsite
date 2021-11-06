@@ -31,8 +31,8 @@ let createCart = (ma, soLuong) => {
     const ten = document.createElement("h5");
     const anh = document.createElement("img");
     let buttonX = document.createElement("button");
-    anh.onclick = () => location.href = location.protocol + '//' +location.host +"/thongtinsp/"+ma;
-    ten.onclick = () => location.href = location.protocol + '//' +location.host +"/thongtinsp/"+ma;
+    anh.onclick = () => location.href = location.protocol + '//' +location.host +"/sanpham/"+ma;
+    ten.onclick = () => location.href = location.protocol + '//' +location.host +"/sanpham/"+ma;
     buttonX.innerHTML = "Xóa";
     buttonX.onclick = () => {
         cart.delete(ma + "");
