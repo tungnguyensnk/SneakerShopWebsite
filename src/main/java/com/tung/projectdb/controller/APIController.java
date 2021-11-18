@@ -43,7 +43,9 @@ public class APIController {
         }
         if (user.length() < 4 || pass.length() < 4)
             return "0";
-        if (!ten.matches("[a-zA-Z]"))
+        if (!ten.matches("[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ" +
+                "fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu" +
+                "UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ,.'-]+"))
             return "1";
         if (sdt.length() != 10 || !sdt.startsWith("0") || sdt.matches("\\d"))
             return "2";
