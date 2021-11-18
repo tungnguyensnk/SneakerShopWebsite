@@ -51,11 +51,11 @@
                 <div class="btn" style="margin: 20px 20%;width: 60%;">
                     <form class="form" style="margin-top: 10px">
                         <label for="ten"></label>
-                        <input type="text" id="ten" name="ten" placeholder="Tên" th:value="${taikhoan.getTen()}" autocomplete="off">
+                        <input type="text" id="ten" name="ten" th:placeholder="'Tên cũ: '+${taikhoan.getTen()}" autocomplete="off">
                         <label for="sdt"></label>
-                        <input type="text" id="sdt" name="sdt" placeholder="Số Điện Thoại" th:value="${taikhoan.getSdt()}" autocomplete="off">
+                        <input type="text" id="sdt" name="sdt" placeholder="Số Điện Thoại" th:placeholder="'SĐT cũ: 0'+${taikhoan.getSdt()}" autocomplete="off">
                         <label for="diachi"></label>
-                        <input type="text" id="diachi" name="diachi" placeholder="Địa Chỉ" th:value="${taikhoan.getDiaChi()}" autocomplete="off">
+                        <input type="text" id="diachi" name="diachi" placeholder="Địa Chỉ" th:placeholder="'Địa chỉ cũ: '+${taikhoan.getDiaChi()}" autocomplete="off">
                         <input type="button" id="button2" value="Đổi thông tin" onclick="changeInfo()">
                     </form>
                 </div>

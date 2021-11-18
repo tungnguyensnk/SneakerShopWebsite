@@ -109,7 +109,9 @@
 
 }
 
-.root-btn {
+.btn h4,.btn h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .btn {

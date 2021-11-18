@@ -71,6 +71,17 @@
             <div class="cart-pop">
             </div>
         </div>
+        <img th:src="@{${base}+'/image/iconchat.png'}" class="icon-chat" onclick="showchat()">
+        <div id="chat-area">
+            <div id="chat-history">
+            </div>
+            <form class="form-chat">
+                <label for="chat"></label>
+                <input type="text" id="chat" style="width: 80%" name="chat" placeholder="Nhập gì đó..."
+                       autocomplete="off">
+                <input type="button" id="send" style="width: 15%;border-radius: 10px" value="Gửi" onclick="sendchat()">
+            </form>
+        </div>
     </div>
 </div>
 <div class="top-nav" style="background-color: rgb(38, 42, 43);" th:fragment="navbar">
@@ -140,11 +151,11 @@
     <h2 style="grid-column: 1/4">Top Sản phẩm</h2>
     <th:block th:each="item : ${items}">
         <div class="item-in-list">
-            <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${base}+'/'+${item.getLinkAnh()}"
-                                                                 class="img-in-list"></a>
+            <a th:href="'/sanpham/'+${item.getId()}"><img th:src="${base}+'/'+${item.getLinkAnh()}"
+                                                          class="img-in-list"></a>
             <h3 th:text="${item.getTen()}" style="text-align: center;margin: 5px"></h3>
             <h3 th:text="${item.getGia()} +' $'" style="text-align: center;color: rgb(117, 76, 48);margin: 5px"></h3>
-            <button class="button-in-list" th:onclick="'addCart('+${item.getMaSanPham()}+')'">
+            <button class="button-in-list" th:onclick="'addCart('+${item.getId()}+')'">
                 <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
             </button>
         </div>

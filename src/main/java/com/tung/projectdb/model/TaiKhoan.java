@@ -1,54 +1,47 @@
 package com.tung.projectdb.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.LinkedList;
-import java.util.List;
+import javax.persistence.*;
 
+@Table(name = "taikhoan")
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class TaiKhoan {
-    @Getter
-    String user;
-    @Getter
-    String pass;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
-    public void setPass(String pass) {
-        this.pass = pass;
-        this.key = DigestUtils.sha256Hex(user + pass);
-    }
+    @Column(name = "user", nullable = false, length = 50)
+    private String user;
 
-    @Setter
-    @Getter
-    String key;
+    @Column(name = "pass", nullable = false, length = 50)
+    private String pass;
 
-    @Setter
-    @Getter
-    String ten;
+    @Column(name = "secretkey", nullable = false, length = 100)
+    private String secretkey;
 
-    @Setter
-    @Getter
-    String sdt;
+    @Column(name = "ten", length = 100)
+    private String ten;
 
-    @Setter
-    @Getter
-    String diaChi;
+    @Column(name = "sdt")
+    private Integer sdt;
 
-    @Getter
-    @Setter
-    List<DonHang> donHangList = new LinkedList<>();
-    public TaiKhoan(String user, String pass) {
-        this.user = user;
-        this.pass = pass;
-        this.key = DigestUtils.sha256Hex(user + pass);
-    }
+    @Column(name = "diachi", length = 200)
+    private String diaChi;
 
-    public TaiKhoan(String user, String pass, String ten, String sdt, String diaChi) {
+    public TaiKhoan(String user, String pass, String ten, Integer sdt, String diaChi) {
         this.user = user;
         this.pass = pass;
         this.ten = ten;
         this.sdt = sdt;
         this.diaChi = diaChi;
-        this.key = DigestUtils.sha256Hex(user + pass);
+        this.secretkey = DigestUtils.sha256Hex(user + pass);
     }
 }

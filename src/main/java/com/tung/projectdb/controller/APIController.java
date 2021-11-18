@@ -1,19 +1,14 @@
 package com.tung.projectdb.controller;
 
-import com.tung.projectdb.model.Data;
-import com.tung.projectdb.model.DonHang;
-import com.tung.projectdb.model.Item;
-import com.tung.projectdb.model.TaiKhoan;
+import com.tung.projectdb.model.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
 
 @RestController
 public class APIController {
@@ -21,7 +16,7 @@ public class APIController {
     public String checkDangNhap(@RequestParam("user") String user, @RequestParam("pass") String pass, HttpServletResponse response) {
         String key = DigestUtils.sha256Hex(user + pass);
         for (TaiKhoan taiKhoan : Data.getTaiKhoans()) {
-            if (key.equals(taiKhoan.getKey())) {
+            if (key.equals(taiKhoan.getSecretkey())) {
                 Cookie cookie = new Cookie("key", key);
                 cookie.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/");
@@ -42,52 +37,57 @@ public class APIController {
     @PostMapping("/dangky")
     public String checkDangKy(@RequestParam("user") String user, @RequestParam("pass") String pass, @RequestParam("ten") String ten, @RequestParam("sdt") String sdt, @RequestParam("diachi") String diachi) {
         for (TaiKhoan taiKhoan : Data.getTaiKhoans()) {
-            if (user.equals(taiKhoan.getUser()) || sdt.equals(taiKhoan.getSdt())) {
+            if (user.equals(taiKhoan.getUser())) {
                 return "false";
             }
         }
+        if (user.length() < 4 || pass.length() < 4)
+            return "0";
+        if (!ten.matches("[a-zA-Z]"))
+            return "1";
+        if (sdt.length() != 10 || !sdt.startsWith("0") || sdt.matches("\\d"))
+            return "2";
+        if (diachi.length() == 0)
+            return "3";
         Data.writeLogs("reg", "user:" + user + ", pass: " + pass + ", ten: " + ten + ", sdt: " + sdt + ", diachi: " + diachi);
-        Data.getTaiKhoans().add(new TaiKhoan(user, pass, ten, sdt, diachi));
+        Data.getContext().getBean(TaiKhoanRepository.class).addTaiKhoan(user, pass, DigestUtils.sha256Hex(user + pass), ten, Integer.parseInt(sdt), diachi);
+        Data.setTaiKhoans(Data.getContext().getBean(TaiKhoanRepository.class).findAll());
         return "true";
     }
 
     @PostMapping("/dathang")
-    public String datHang(@CookieValue(value = "key", defaultValue = "") String key, HttpServletResponse response, @RequestParam(value = "passxm", defaultValue = "") String passxm, @RequestParam(value = "keydh", defaultValue = "") String keydh) {
+    public String datHang(@CookieValue(value = "key", defaultValue = "") String key, HttpServletResponse response, @RequestParam(value = "keydh", defaultValue = "") String keydh) {
         if (MainController.checkKey(key) == null) {
             return "false";
         }
-        TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
-        assert taiKhoan != null;
-        if (!passxm.equals(taiKhoan.getPass()))
-            return "passx";
         if (keydh.equals(""))
             return "false";
         else {
             String[] list = keydh.split("a");
             TaiKhoan cur = Data.getTaiKhoanByKey(key);
             if (cur != null) {
-                Map<Item, Integer> don = new HashMap<>();
+                Date date = new Date();
+                Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                c.add(Calendar.HOUR, 7);
+                Data.getContext().getBean(DonHangRepository.class).taoDon("Chưa Thanh Toán", c.getTime(), cur.getId());
+                Cookie cookie = new Cookie("z", "");
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 for (String hang : list) {
                     int ma = Integer.parseInt(hang.split("b")[0].replaceAll("c", ""));
                     int soLuong = Integer.parseInt(hang.split("b")[1]);
                     Item item = Data.getItemByKey(ma);
                     if (item != null && item.getSoLuong() != 0 && soLuong != 0) {
-                        don.put(item, Math.min(item.getSoLuong(), soLuong));
-                        item.setSoLuong((item.getSoLuong() > soLuong) ? (item.getSoLuong() - soLuong) : 0);
+                        Data.getContext().getBean(ChitietdonRepository.class).themHang(
+                                Data.getContext().getBean(DonHangRepository.class).getOrderId(cur.getId()), item.getId(), Math.min(item.getSoLuong(), soLuong)
+                        );
+                        Data.getContext().getBean(ItemRepository.class).changeSoLuong((item.getSoLuong() > soLuong) ? (item.getSoLuong() - soLuong) : 0, item.getId());
+                        Data.setItems(Data.getContext().getBean(ItemRepository.class).findAll());
                     }
                 }
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                Date date = new Date();
-                Calendar c = Calendar.getInstance();
-                c.setTime(date);
-                c.add(Calendar.HOUR, 7);
-                cur.getDonHangList().add(new DonHang(don, "Chưa xác nhận", formatter.format(c.getTime()), ""));
-                Data.writeLogs("dathang", cur.getUser() + " đặt hàng");
-                Cookie cookie = new Cookie("z", "");
-                cookie.setMaxAge(0);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-                return "true";
+                return Data.getContext().getBean(DonHangRepository.class).getOrderId(cur.getId()) + "";
             }
 
         }
@@ -101,8 +101,38 @@ public class APIController {
         } else {
             TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
             assert taiKhoan != null;
-            taiKhoan.getDonHangList().get(id).setTrangThaiDon("Đã hủy");
+            Data.getContext().getBean(DonHangRepository.class).upTrangThai("Đơn đã hủy.", id);
             System.out.println(id);
+            return "true";
+        }
+    }
+
+    @GetMapping("/gettn")
+    public String getTinNhan(@CookieValue(value = "key", defaultValue = "") String key) {
+        if (MainController.checkKey(key) == null) {
+            return "null";
+        } else {
+            TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
+            assert taiKhoan != null;
+            LinkedList<Chat> list = Data.getContext().getBean(ChatRepository.class).getChat(taiKhoan.getId());
+            StringBuilder s = new StringBuilder();
+            if (list.size() == 0)
+                return "null";
+            for (int i = 0; i < list.size(); i++) {
+                s.append(list.get(i).getNoidung()).append("|z|");
+            }
+            return s.substring(0, s.length() - 3);
+        }
+    }
+
+    @PostMapping("/guitn")
+    public String guiTinNhan(@CookieValue(value = "key", defaultValue = "") String key, @RequestParam("nd") String nd) {
+        if (MainController.checkKey(key) == null) {
+            return "false";
+        } else {
+            TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
+            assert taiKhoan != null;
+            Data.getContext().getBean(ChatRepository.class).addchat(taiKhoan.getId(), nd);
             return "true";
         }
     }
@@ -117,7 +147,8 @@ public class APIController {
             assert taiKhoan != null;
             if (taiKhoan.getPass().equals(old)) {
                 taiKhoan.setPass(pnew);
-                Cookie cookie = new Cookie("key", taiKhoan.getKey());
+                Data.getContext().getBean(TaiKhoanRepository.class).setPass(taiKhoan.getUser(), taiKhoan.getPass(), taiKhoan.getSecretkey());
+                Cookie cookie = new Cookie("key", taiKhoan.getSecretkey());
                 cookie.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
@@ -140,15 +171,22 @@ public class APIController {
             int i = 3;
             if (ten.equals("") || ten.equals(taiKhoan.getTen()))
                 i--;
-            if (sdt.equals("") || sdt.equals(taiKhoan.getSdt()))
+            if (sdt.equals(""))
                 i--;
             if (diachi.equals("") || diachi.equals(taiKhoan.getDiaChi()))
                 i--;
             if (i == 0)
                 return "false";
+            if (!ten.matches("[a-zA-Z]"))
+                return "false";
+            if (sdt.length() != 10 || !sdt.startsWith("0") || sdt.matches("\\d"))
+                return "false";
+            if (diachi.length() == 0)
+                return "false";
             taiKhoan.setTen(ten);
             taiKhoan.setDiaChi(diachi);
-            taiKhoan.setSdt(sdt);
+            taiKhoan.setSdt(Integer.parseInt(sdt));
+            Data.getContext().getBean(TaiKhoanRepository.class).setInfo(taiKhoan.getUser(), taiKhoan.getTen(), taiKhoan.getDiaChi(), taiKhoan.getSdt());
             Data.writeLogs("changeinfo", taiKhoan.getUser() + "change info - ten: " + taiKhoan.getTen() + ", sdt: " + taiKhoan.getSdt() + ", diachi: " + taiKhoan.getDiaChi());
             return "true";
         }

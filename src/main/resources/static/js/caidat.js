@@ -17,7 +17,7 @@ tabs.forEach((tab, index) => {
         $(".tab-item.activ").classList.remove("activ");
         $(".tab-pane.activ").classList.remove("activ");
 
-        line.style.left = (this.offsetLeft-8) + "px";
+        line.style.left = (this.offsetLeft - 8) + "px";
         line.style.width = this.offsetWidth + "px";
 
         this.classList.add("activ");
@@ -29,16 +29,15 @@ let pold = document.getElementById("passwordold");
 let pnew = document.getElementById("passwordnew");
 let changePass = () => {
     const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
+    xhttp.onload = function () {
         let kq = this.responseText;
-        if(kq==="true") {
+        if (kq === "true") {
             toast({
                 title: "Thành công",
                 message: "Mật khẩu đã được đổi.",
                 type: "success",
             });
-        }
-        else
+        } else
             toast({
                 title: "Lỗi",
                 message: "Sai mật khẩu hoặc trùng mật khẩu cũ.",
@@ -46,9 +45,9 @@ let changePass = () => {
             });
 
     }
-    xhttp.open("POST", location.protocol + '//' +location.host +"/doipass");
+    xhttp.open("POST", location.protocol + '//' + location.host + "/doipass");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("pass="+pold.value+"&new="+pnew.value);
+    xhttp.send("pass=" + pold.value + "&new=" + pnew.value);
 }
 
 let ten = document.getElementById("ten");
@@ -56,16 +55,15 @@ let sdt = document.getElementById("sdt");
 let diachi = document.getElementById("diachi");
 let changeInfo = () => {
     const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
+    xhttp.onload = function () {
         let kq = this.responseText;
-        if(kq==="true") {
+        if (kq === "true") {
             toast({
                 title: "Thành công",
                 message: "Thông tin đã được đổi.",
                 type: "success",
             });
-        }
-        else
+        } else
             toast({
                 title: "Lỗi",
                 message: "Có lỗi xảy ra.",
@@ -73,7 +71,7 @@ let changeInfo = () => {
             });
 
     }
-    xhttp.open("POST", location.protocol + '//' +location.host +"/doiinfo");
+    xhttp.open("POST", location.protocol + '//' + location.host + "/doiinfo");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("ten="+ten.value+"&sdt="+sdt.value+"&diachi="+diachi.value);
+    xhttp.send("ten=" + ten.value + "&sdt=" + sdt.value + "&diachi=" + diachi.value);
 }

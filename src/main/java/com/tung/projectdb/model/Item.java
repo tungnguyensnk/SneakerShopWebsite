@@ -1,16 +1,35 @@
 package com.tung.projectdb.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "sanpham")
+@Entity
+@Getter
+@Setter
 public class Item {
-    String linkAnh;
-    String ten;
-    String moTa;
-    int maSanPham;
-    int gia;
-    int soLuong;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @Column(name = "gia")
+    private Integer gia;
+
+    @Column(name = "soluong")
+    private Integer soLuong;
+
+    @Column(name = "ten", length = 100)
+    private String ten;
+
+    @Column(name = "mota", length = 1000)
+    private String moTa;
+
+    @Column(name = "linkanh", length = 100)
+    private String linkAnh;
 
 }

@@ -48,12 +48,10 @@
     <h3 style="text-align: center;margin-bottom: 5px">Thông Tin Người Đặt Hàng</h3>
     <h4 style="text-align: center;color: chocolate;margin-top: 0">(chỉnh sửa lại trong cài đặt nếu sai)</h4>
     <h4 style="text-align: center" th:text="'Người đặt hàng: '+${cur.getTen()}"></h4>
-    <h4 style="text-align: center" th:text="'Số điện thoại: '+${cur.getSdt()}"></h4>
+    <h4 style="text-align: center" th:text="'Số điện thoại: 0'+${cur.getSdt()}"></h4>
     <h4 style="text-align: center" th:text="'Địa chỉ: '+${cur.getDiaChi()}"></h4>
     <div>
         <form class="form">
-            <label for="passwordxm"></label>
-            <input type="password" id="passwordxm" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''" name="passxm" placeholder="Xác Minh Mật Khẩu" autocomplete="off">
             <input type="button" id="buttondn" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''" value="Yêu Cầu Đặt Hàng" onclick="dathang()">
         </form>
     </div>

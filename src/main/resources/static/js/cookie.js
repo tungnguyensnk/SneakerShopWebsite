@@ -10,7 +10,7 @@ let addCart = masp => {
 
     toast({
         title: "Thêm thành công!",
-        message: listsp[masp].ten+" đã được cho vào giỏ.",
+        message: listsp[masp].ten + " đã được cho vào giỏ.",
         type: "success",
     });
 
@@ -31,8 +31,8 @@ let createCart = (ma, soLuong) => {
     const ten = document.createElement("h5");
     const anh = document.createElement("img");
     let buttonX = document.createElement("button");
-    anh.onclick = () => location.href = location.protocol + '//' +location.host +"/sanpham/"+ma;
-    ten.onclick = () => location.href = location.protocol + '//' +location.host +"/sanpham/"+ma;
+    anh.onclick = () => location.href = location.protocol + '//' + location.host + "/sanpham/" + ma;
+    ten.onclick = () => location.href = location.protocol + '//' + location.host + "/sanpham/" + ma;
     buttonX.innerHTML = "Xóa";
     buttonX.onclick = () => {
         cart.delete(ma + "");
@@ -107,3 +107,80 @@ let getCookie = () => {
 }
 
 getCookie();
+
+let i = 0, j = 0;
+let scrollChat = () => {
+    chatHistory.scrollTop = i;
+    i += chatHistory.scrollHeight / 100;
+    j++;
+    const sc = setTimeout(scrollChat, 5);
+    if (j === 90)
+        clearTimeout(sc);
+}
+let chatArea = document.getElementById("chat-area");
+let chatEnter = false;
+let firstShow = false;
+let showchat = () => {
+    if (chatArea.classList.contains("show")) {
+        chatArea.classList.remove("show");
+        chatArea.classList.add("hide");
+        chatEnter = false;
+    } else {
+        chatEnter = true;
+        chatArea.classList.add("show");
+        if (!firstShow) {
+            firstShow = true;
+            setTimeout(scrollChat, 1000);
+        }
+        if (chatArea.classList.contains("hide"))
+            chatArea.classList.remove("hide");
+    }
+}
+let chatHistory = document.getElementById("chat-history");
+setInterval(() => {
+    if (chatEnter) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            let kq = this.responseText;
+            while (chatHistory.firstChild) {
+                chatHistory.removeChild(chatHistory.lastChild);
+            }
+            if (kq === "null") {
+                const chat = document.createElement("h4");
+                chat.innerHTML = "Trò chuyện cùng chúng tôi...";
+                chat.classList.add("chat-line1");
+                chatHistory.appendChild(chat);
+            } else {
+                let listText = kq.split("|z|");
+                listText.forEach(value => {
+                    if (value.startsWith("|a|")) {
+                        const chat = document.createElement("h4");
+                        chat.innerHTML = value.substring(3);
+                        chat.classList.add("chat-line1");
+                        chatHistory.appendChild(chat);
+                    } else {
+                        const chat = document.createElement("h4");
+                        chat.innerHTML = value;
+                        chat.classList.add("chat-line2");
+                        chatHistory.appendChild(chat);
+                    }
+                })
+            }
+        }
+        xhttp.open("GET", location.protocol + '//' + location.host + "/gettn");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+    }
+}, 1000);
+
+let noiDungChat = document.getElementById("chat");
+let sendchat = () => {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+    }
+    xhttp.open("POST", location.protocol + '//' + location.host + "/guitn");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("nd=" + noiDungChat.value);
+    noiDungChat.value = "";
+    setTimeout(() => chatHistory.scrollTop = chatHistory.scrollHeight, 1000);
+}

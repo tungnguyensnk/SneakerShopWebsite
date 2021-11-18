@@ -1,23 +1,38 @@
 package com.tung.projectdb.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Map;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
-@Data
+@Table(name = "donhang")
+@Entity
+@Getter
+@Setter
 public class DonHang {
-    Map<Item, Integer> donHang;
-    String trangThaiDon;
-    String ngayDat;
-    String ngayHenGiao;
-    int tongTien;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    public DonHang(Map<Item, Integer> donHang, String trangThaiDon, String ngayDat, String ngayHenGiao) {
-        this.donHang = donHang;
-        this.trangThaiDon = trangThaiDon;
-        this.ngayDat = ngayDat;
-        this.ngayHenGiao = ngayHenGiao;
-        tongTien = 0;
-        donHang.forEach((item, soLuong) -> tongTien+=item.getGia()*soLuong);
-    }
+    @Column(name = "trangthaidon", length = 50)
+    private String trangthaidon;
+
+    @Column(name = "ngaydat")
+    private Date ngaydat;
+
+    @Column(name = "ngayhengiao")
+    private Date ngayhengiao;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private TaiKhoan user;
+
+    @Transient
+    int total;
+
+    @Transient
+    LinkedList<Chitietdon> list;
 }

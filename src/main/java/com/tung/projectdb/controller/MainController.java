@@ -1,13 +1,12 @@
 package com.tung.projectdb.controller;
 
-import com.tung.projectdb.model.Data;
-import com.tung.projectdb.model.DonHang;
-import com.tung.projectdb.model.Item;
-import com.tung.projectdb.model.TaiKhoan;
+import com.tung.projectdb.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -17,7 +16,7 @@ public class MainController {
 
     public static String checkKey(String key) {
         for (TaiKhoan taiKhoan : Data.getTaiKhoans()) {
-            if (key.equals(taiKhoan.getKey())) {
+            if (key.equals(taiKhoan.getSecretkey())) {
                 return taiKhoan.getUser();
             }
         }
@@ -28,6 +27,8 @@ public class MainController {
     public String index(Model model, @CookieValue(value = "key", defaultValue = "") String key) {
         model.addAttribute("items", Data.getItems());
         model.addAttribute("active", "index");
+        Data.setItems(Data.getContext().getBean(ItemRepository.class).getAll());
+        Data.setTaiKhoans(Data.getContext().getBean(TaiKhoanRepository.class).findAll());
         if (checkKey(key) != null) {
             model.addAttribute("name", checkKey(key));
             model.addAttribute("isLogin", true);
@@ -149,7 +150,7 @@ public class MainController {
         model.addAttribute("text", text);
         List<Item> danhSach = new LinkedList<>();
         for (Item item : Data.getItems()) {
-            if ((item.getTen().toLowerCase().contains(text.toLowerCase()) || String.valueOf(item.getMaSanPham()).contains(text)) && !text.equals(""))
+            if ((item.getTen().toLowerCase().contains(text.toLowerCase()) || String.valueOf(item.getId()).contains(text)) && !text.equals(""))
                 danhSach.add(item);
         }
         model.addAttribute("items", Data.getItems());
@@ -211,13 +212,18 @@ public class MainController {
         TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
         model.addAttribute("cur", taiKhoan);
         assert taiKhoan != null;
-        if (taiKhoan.getDonHangList().isEmpty())
+        LinkedList<DonHang> listDonHang = Data.getContext().getBean(DonHangRepository.class).getDonHang(taiKhoan.getId());
+        if (listDonHang.isEmpty())
             model.addAttribute("isEmpty", true);
         else
             model.addAttribute("isEmpty", false);
-        List<DonHang> donHangList = new LinkedList<>(taiKhoan.getDonHangList());
-        Collections.reverse(donHangList);
-        model.addAttribute("listonhang", donHangList);
+
+        for (DonHang donHang : listDonHang) {
+            donHang.setList(Data.getContext().getBean(ChitietdonRepository.class).getChitietDon(donHang.getId()));
+            donHang.setTotal(Data.getContext().getBean(DonHangRepository.class).getTotal(donHang.getId()));
+        }
+        Collections.reverse(listDonHang);
+        model.addAttribute("listdh", listDonHang);
         return "kiemtra";
     }
 
@@ -278,6 +284,34 @@ public class MainController {
         return "dathang";
     }
 
+
+    public static String HMAC(String data)
+            throws Exception {
+        SecretKeySpec secretKeySpec = new SecretKeySpec("KOLKJXEUJQMATHIOCEQGUFZKOVIPBLGJ".getBytes(), "HmacSHA512");
+        Mac mac = Mac.getInstance("HmacSHA512");
+        mac.init(secretKeySpec);
+        Formatter formatter = new Formatter();
+        for (byte b : mac.doFinal(data.getBytes())) {
+            formatter.format("%02x", b);
+        }
+        return formatter.toString();
+    }
+
+    @GetMapping("/thanhtoan")
+    public String thanhToan(@RequestParam("id") int id) throws Exception {
+        String s = "vnp_Amount=" + (Data.getContext().getBean(DonHangRepository.class).getTotal(id) * 2300000) + "&vnp_Command=pay&vnp_CreateDate=20210801153333&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1" +
+                "&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+so+" + id + "&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Fwibu.fun%2FReturnUrl&vnp_TmnCode=GWLOEB48&vnp_TxnRef=" + id + "&vnp_Version=2.1.0";
+        s += "&vnp_SecureHash=" + HMAC(s);
+        return "redirect:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?" + s;
+    }
+
+    @GetMapping("/ReturnUrl")
+    public String returnUrl(@RequestParam("vnp_ResponseCode") String code, @RequestParam("vnp_TxnRef") int orderId) {
+        if (code.equals("00"))
+            Data.getContext().getBean(DonHangRepository.class).upTrangThai("Đã Thanh Toán. Đang Chuẩn Bị Hàng", orderId);
+        return "redirect:/kiemtra";
+    }
+
     @GetMapping("/thoat")
     public String thoat(HttpServletResponse response) {
         Cookie cookie = new Cookie("key", "");
@@ -301,7 +335,7 @@ public class MainController {
             model.addAttribute("isLogin", false);
             return "redirect:/dangnhap";
         }
-        model.addAttribute("taikhoan",Data.getTaiKhoanByKey(key));
+        model.addAttribute("taikhoan", Data.getTaiKhoanByKey(key));
         return "setting";
     }
 }

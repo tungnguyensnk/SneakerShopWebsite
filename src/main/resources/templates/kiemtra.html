@@ -19,34 +19,39 @@
 <div th:replace="index :: header"></div>
 <div th:replace="index :: navbar"></div>
 <div th:unless="${isEmpty}">
-    <th:block th:each="donhang : ${listonhang}">
+    <th:block th:each="donhang : ${listdh}">
         <div class="btn">
             <div class="gio-hang">
                 <h3 style="text-align: center"
-                    th:text="'Thông Tin Đơn Hàng #'+${listonhang.size()-listonhang.indexOf(donhang)}"></h3>
-                <h4 style="text-align: center" th:text="'Trạng thái: '+${donhang.getTrangThaiDon()}"></h4>
-                <h4 style="text-align: center" th:text="'Ngày đặt: '+${donhang.getNgayDat()}"></h4>
-                <h4 style="text-align: center" th:text="'Ngày hẹn giao: '+${donhang.getNgayHenGiao()}"></h4>
-                <th:block th:each="dh : ${donhang.getDonHang()}">
+                    th:text="'Thông Tin Đơn Hàng #'+${donhang.getId()}"></h3>
+                <h4 style="text-align: center" th:text="'Trạng thái: '+${donhang.getTrangthaidon()}"></h4>
+                <h4 style="text-align: center" th:text="'Ngày đặt: '+${donhang.getNgaydat().toLocaleString().replace('00:00:00, ','')}"></h4>
+                <h4 style="text-align: center" th:text="'Ngày hẹn giao: '+${donhang.getNgayhengiao()==null ? 'Chưa duyệt' : donhang.getNgayhengiao()}"></h4>
+                <th:block th:each="dh : ${donhang.getList()}">
                     <div class="item-don-hang">
-                        <img th:src="${base}+'/'+${dh.getKey().getLinkAnh()}" class="img-don-hang">
+                        <img th:src="${base}+'/'+${dh.getProduct().getLinkAnh()}" class="img-don-hang">
                         <div style="display: flex;flex-direction: row;margin-left: 15px"><h4 class="des-don-hang"
                                                                                              style="margin-right: 5px"
-                                                                                             th:text="${dh.getKey().getTen()} +' '"></h4>
-                            <h4 class="des-don-hang" th:text="'(x'+${dh.getValue()}+')'"></h4>
+                                                                                             th:text="${dh.getProduct().getTen()} +' '"></h4>
+                            <h4 class="des-don-hang" th:text="'(x'+${dh.getSoluong()}+')'"></h4>
                         </div>
                     </div>
                 </th:block>
             </div>
-            <h4 style="text-align: center" th:text="'Tổng tiền: '+${donhang.getTongTien()}+'$'"></h4>
+            <h4 style="text-align: center" th:text="'Tổng tiền: '+${donhang.getTotal()}+'$'"></h4>
             <button class="button-in-list"
-                    th:onclick="'huydon('+${listonhang.size()-listonhang.indexOf(donhang)-1}+')'"
-                    th:if="${donhang.getTrangThaiDon()} == 'Chưa xác nhận'">
+                    th:onclick="'thanhtoan('+${donhang.getId()}+')'"
+                    th:if="${donhang.getTrangthaidon().trim()} == 'Chưa Thanh Toán'">
+                <h3 style="margin: auto;color: aliceblue;">Thanh toán</h3>
+            </button>
+            <button class="button-in-list"
+                    th:onclick="'huydon('+${donhang.getId()}+')'"
+                    th:if="${donhang.getTrangthaidon().trim()} == 'Chưa Thanh Toán'">
                 <h3 style="margin: auto;color: aliceblue;">Hủy đơn hàng</h3>
             </button>
-            <h3 style="text-align: center;margin-bottom: 5px">Thông Tin Người Đặt Hàng</h3>
+            <h3 style="text-align: center;margin-top: 20px">Thông Tin Người Đặt Hàng</h3>
             <h4 style="text-align: center" th:text="'Người đặt hàng: '+${cur.getTen()}"></h4>
-            <h4 style="text-align: center" th:text="'Số điện thoại: '+${cur.getSdt()}"></h4>
+            <h4 style="text-align: center" th:text="'Số điện thoại: 0'+${cur.getSdt()}"></h4>
             <h4 style="text-align: center" th:text="'Địa chỉ: '+${cur.getDiaChi()}"></h4>
         </div>
     </th:block>

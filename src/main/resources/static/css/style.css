@@ -309,7 +309,8 @@ img[src*="banner"] {
 
 .trend-item {
     position: relative;
-    width: 600px;
+    max-width: 600px;
+    min-width: 37vw;
     height: 300px;
     object-fit: cover;
     margin: 20px 15px 20px 15px;
@@ -319,7 +320,7 @@ img[src*="banner"] {
 }
 
 .trend-image {
-    width: 600px;
+    width: 100%;
     height: 300px;
     object-fit: cover;
     opacity: 0.8;
@@ -419,6 +420,7 @@ ul li {
     border: none;
     color: rgb(232, 230, 227);
     cursor: pointer;
+    margin-bottom: 5px;
 }
 
 .form {
@@ -537,4 +539,120 @@ ul li {
     top: 81px;
     color: rgb(232, 230, 227);
     background: #222222;
+}
+
+.icon-chat {
+    position: fixed;
+    top: 90vh;
+    right: 20px;
+    width: 50px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#chat-area {
+    position: fixed;
+    bottom: 11vh;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    z-index: 100;
+    background-color: #1c1e1f;
+    border-radius: 10px;
+    border: 1px solid rgb(113, 73, 46);
+    box-sizing: border-box;
+    opacity: 0;
+    display: none;
+}
+
+@keyframes show-chat {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.show {
+    display: block !important;
+    animation-name: show-chat;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hide-chat {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.hide {
+    display: block !important;
+    animation-name: hide-chat;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.form-chat {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#chat-history {
+    position: relative;
+    margin-top: 10px;
+    padding: 10px;
+    height: 75%;
+    overflow: auto;
+}
+
+.chat-line1 {
+    border-radius: 10px;
+    width: 70%;
+    padding: 10px;
+    background-color: #303436;
+    word-break: keep-all;
+}
+
+.chat-line2 {
+    border-radius: 10px;
+    width: 70%;
+    margin-left: 24%;
+    padding: 10px;
+    background-color: #c94118;
+    word-break: keep-all;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(113, 73, 46);
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #c94118;
 }
