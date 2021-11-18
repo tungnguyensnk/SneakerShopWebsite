@@ -128,10 +128,6 @@ let showchat = () => {
     } else {
         chatEnter = true;
         chatArea.classList.add("show");
-        if (!firstShow) {
-            firstShow = true;
-            setTimeout(scrollChat, 1000);
-        }
         if (chatArea.classList.contains("hide"))
             chatArea.classList.remove("hide");
     }
@@ -165,6 +161,10 @@ setInterval(() => {
                         chatHistory.appendChild(chat);
                     }
                 })
+                if (!firstShow) {
+                    firstShow = true;
+                    scrollChat();
+                }
             }
         }
         xhttp.open("GET", location.protocol + '//' + location.host + "/gettn");
