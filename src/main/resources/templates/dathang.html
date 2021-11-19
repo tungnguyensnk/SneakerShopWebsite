@@ -23,7 +23,7 @@
     <span id="sp2"></span>
     <span id="sp3"></span>
     <span id="sp4"></span>
-    <h3 style="text-align: center">Thông Tin Giỏ Hàng</h3>
+    <h3 style="text-align: center">Chi Tiết Đơn Hàng</h3>
     <div class="gio-hang">
         <th:block th:each="dh : ${donhang}">
             <div class="item-don-hang">
@@ -52,7 +52,7 @@
     <h4 style="text-align: center" th:text="'Địa chỉ: '+${cur.getDiaChi()}"></h4>
     <div>
         <form class="form">
-            <input type="button" id="buttondn" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''" value="Yêu Cầu Đặt Hàng" onclick="dathang()">
+            <input type="button" id="buttondn" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''" value="Tạo Đơn & Thanh Toán" onclick="dathang()">
         </form>
     </div>
     <h4 style="text-align: center" id="thong-bao"></h4>

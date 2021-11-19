@@ -21,11 +21,11 @@
     <h2 style="grid-column: 1/5">Kết quả cho: <span th:text="${text}"></span></h2>
     <th:block th:each="item : ${ds}">
         <div class="item-in-list">
-            <a th:href="'/sanpham/'+${item.getMaSanPham()}"><img th:src="${base}+'/'+${item.getLinkAnh()}"
+            <a th:href="'/sanpham/'+${item.getId()}"><img th:src="${base}+'/'+${item.getLinkAnh()}"
                                                                  class="img-in-list"></a>
             <h3 th:text="${item.getTen()}" style="text-align: center;margin: 5px"></h3>
             <h3 th:text="${item.getGia()} +' $'" style="text-align: center;color: rgb(117, 76, 48);margin: 5px"></h3>
-            <button class="button-in-list" th:onclick="'addCart('+${item.getMaSanPham()}+')'">
+            <button class="button-in-list" th:onclick="'addCart('+${item.getId()}+')'">
                 <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
             </button>
         </div>

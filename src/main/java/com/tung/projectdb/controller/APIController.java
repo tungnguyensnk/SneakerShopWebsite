@@ -47,7 +47,7 @@ public class APIController {
                 "fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu" +
                 "UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ ,.'-]+"))
             return "1";
-        if (sdt.length() != 10 || !sdt.startsWith("0") || sdt.matches("\\d"))
+        if (!sdt.matches("(0[35789])(\\d{8})"))
             return "2";
         if (diachi.length() == 0)
             return "3";

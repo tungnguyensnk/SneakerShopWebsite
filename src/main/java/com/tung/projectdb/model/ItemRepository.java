@@ -15,4 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     @Query(value = "select * from sanpham order by id", nativeQuery = true)
     LinkedList<Item> getAll();
+
+    @Query(value = "select * from sanpham order by soluong, id limit 6", nativeQuery = true)
+    LinkedList<Item> getTop();
 }

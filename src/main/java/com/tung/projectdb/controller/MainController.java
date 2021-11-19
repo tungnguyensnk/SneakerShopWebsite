@@ -26,6 +26,7 @@ public class MainController {
     @RequestMapping({"/", "/index"})
     public String index(Model model, @CookieValue(value = "key", defaultValue = "") String key) {
         model.addAttribute("items", Data.getItems());
+        model.addAttribute("itemsTop", Data.getContext().getBean(ItemRepository.class).getTop());
         model.addAttribute("active", "index");
         Data.setItems(Data.getContext().getBean(ItemRepository.class).getAll());
         Data.setTaiKhoans(Data.getContext().getBean(TaiKhoanRepository.class).findAll());
@@ -322,6 +323,7 @@ public class MainController {
         return "redirect:/";
     }
 
+    @SuppressWarnings("SpringMVCViewInspection")
     @GetMapping("/caidat")
     public String setting(Model model, @CookieValue(value = "key", defaultValue = "") String key) {
         model.addAttribute("items", Data.getItems());
