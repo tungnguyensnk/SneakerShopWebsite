@@ -146,7 +146,14 @@ setInterval(() => {
                 chat.innerHTML = "Trò chuyện cùng chúng tôi...";
                 chat.classList.add("chat-line1");
                 chatHistory.appendChild(chat);
-            } else {
+            }
+            else if (kq === "false") {
+                const chat = document.createElement("h4");
+                chat.innerHTML = "Đăng nhập để trò chuyện cùng chúng tôi...";
+                chat.classList.add("chat-line1");
+                chatHistory.appendChild(chat);
+                noiDungChat.disabled = true;
+            }else {
                 let listText = kq.split("|z|");
                 listText.forEach(value => {
                     if (value.startsWith("|a|")) {
@@ -183,4 +190,10 @@ let sendchat = () => {
     xhttp.send("nd=" + noiDungChat.value);
     noiDungChat.value = "";
     setTimeout(() => chatHistory.scrollTop = chatHistory.scrollHeight, 1000);
+}
+
+noiDungChat.onkeyup = ev => {
+    if (ev.code === "Enter") {
+        sendchat();
+    }
 }

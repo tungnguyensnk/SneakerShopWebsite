@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="search-ui">
-        <img th:src="@{${base}+'/image/logo.png'}" class="logo" alt="logo">
+        <img th:src="@{${base}+'/image/logo.png'}" class="logo" alt="logo" style="cursor: pointer" onclick="location.href = location.protocol + '//' + location.host">
         <div>
             <form class="searchbar" th:action="${base}+'/timkiem'" method="get">
                 <label for="search-text"></label>
@@ -75,12 +75,12 @@
         <div id="chat-area">
             <div id="chat-history">
             </div>
-            <form class="form-chat">
+            <div class="form-chat">
                 <label for="chat"></label>
                 <input type="text" id="chat" style="width: 80%" name="chat" placeholder="Nhập gì đó..."
                        autocomplete="off">
                 <input type="button" id="send" style="width: 15%;border-radius: 10px" value="Gửi" onclick="sendchat()">
-            </form>
+            </div>
         </div>
     </div>
 </div>

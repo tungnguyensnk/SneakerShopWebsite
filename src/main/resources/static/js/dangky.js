@@ -23,29 +23,25 @@ let register = () => {
                 message: "Tài khoản hoặc số điện thoại đã tồn tại.",
                 type: "error",
             });
-        }
-        else if (kq ==="0"){
+        } else if (kq === "0") {
             toast({
                 title: "Lỗi",
                 message: "Tài khoản và mật khẩu tổi thiểu 4 kí tự.",
                 type: "error",
             });
-        }
-        else if (kq ==="1"){
+        } else if (kq === "1") {
             toast({
                 title: "Lỗi",
                 message: "Tên chỉ chứa chữ cái và không được để trống.",
                 type: "error",
             });
-        }
-        else if (kq ==="2"){
+        } else if (kq === "2") {
             toast({
                 title: "Lỗi",
                 message: "Sai định dạng sô điện thoại.",
                 type: "error",
             });
-        }
-        else {
+        } else {
             toast({
                 title: "Lỗi",
                 message: "Địa chỉ không được để trống.",
@@ -57,4 +53,10 @@ let register = () => {
     xhttp.open("POST", location.protocol + '//' + location.host + "/dangky");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("user=" + user.value + "&pass=" + pass.value + "&ten=" + ten.value + "&sdt=" + sdt.value + "&diachi=" + diachi.value);
+}
+
+let formdk = document.getElementById("form-dang-ky");
+formdk.onkeyup = ev => {
+    if (ev.code === "Enter")
+        register();
 }

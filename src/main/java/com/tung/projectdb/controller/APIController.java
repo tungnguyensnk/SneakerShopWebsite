@@ -112,7 +112,7 @@ public class APIController {
     @GetMapping("/gettn")
     public String getTinNhan(@CookieValue(value = "key", defaultValue = "") String key) {
         if (MainController.checkKey(key) == null) {
-            return "null";
+            return "false";
         } else {
             TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
             assert taiKhoan != null;
@@ -134,7 +134,8 @@ public class APIController {
         } else {
             TaiKhoan taiKhoan = Data.getTaiKhoanByKey(key);
             assert taiKhoan != null;
-            Data.getContext().getBean(ChatRepository.class).addchat(taiKhoan.getId(), nd);
+            if(nd.length()!=0)
+                Data.getContext().getBean(ChatRepository.class).addchat(taiKhoan.getId(), nd);
             return "true";
         }
     }
