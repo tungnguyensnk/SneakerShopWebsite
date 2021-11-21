@@ -1,12 +1,26 @@
-const cart = new Map();
+class gioHang {
+    constructor(product_id, soluong, mausac, size) {
+        this.product_id = product_id;
+        this.soluong = soluong;
+        this.mausac = mausac;
+        this.size = size;
+    }
+}
+
+let cartItems = [];
+
 let carSl = document.getElementsByClassName("cart-sl").item(0);
-const element = document.getElementsByClassName("cart-pop").item(0);
 var total;
-let addCart = masp => {
-    masp = masp + "";
-    if (cart.has(masp)) {
-        cart.set(masp, cart.get(masp) + 1);
-    } else cart.set(masp, 1);
+let addCart = (masp, mau, size) => {
+    let dem = 0;
+    cartItems.forEach(value => {
+        if (value.product_id === masp && value.mausac === mau && value.size === size) {
+            value.soluong++;
+            dem = 1;
+        }
+    })
+    if (dem === 0)
+        cartItems.push(new gioHang(masp, 1, mau, size));
 
     toast({
         title: "Thêm thành công!",
@@ -16,37 +30,38 @@ let addCart = masp => {
 
     const d = new Date();
     d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
-    let jsonkey = JSON.stringify(Object.fromEntries(cart));
-    jsonkey = jsonkey.substring(1, jsonkey.length - 1);
-    jsonkey = jsonkey.replaceAll(",", "a").replaceAll(":", "b").replaceAll("\"", "c");
-    document.cookie = "z=" + jsonkey + ";expires=" + d.toUTCString() + "; path=/";
+    document.cookie = "cart=" + btoa(JSON.stringify(cartItems)) + ";expires=" + d.toUTCString() + "; path=/";
     getCookie();
 }
-let createCart = (ma, soLuong) => {
+
+const cartItemsist = document.getElementById("cart-list");
+let createCart = (ma, soLuong, mausac, size) => {
     const div = document.createElement("div");
     div.style.display = "flex";
     div.style.alignItems = "center";
     div.style.justifyContent = "space-between";
     div.style.flexDirection = "row";
-    const ten = document.createElement("h5");
+    const ten = document.createElement("div");
     const anh = document.createElement("img");
     let buttonX = document.createElement("button");
     anh.onclick = () => location.href = location.protocol + '//' + location.host + "/sanpham/" + ma;
+    anh.style.cursor = "pointer";
     ten.onclick = () => location.href = location.protocol + '//' + location.host + "/sanpham/" + ma;
+    ten.style.cursor = "pointer";
     buttonX.innerHTML = "Xóa";
     buttonX.onclick = () => {
-        cart.delete(ma + "");
+        cartItems = cartItems.filter(value => {
+            if (value.product_id !== ma || value.mausac !== mausac || value.size !== size)
+                return true;
+        });
         const d = new Date();
         d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
-        let jsonkey = JSON.stringify(Object.fromEntries(cart));
-        jsonkey = jsonkey.substring(1, jsonkey.length - 1);
-        jsonkey = jsonkey.replaceAll(",", "a").replaceAll(":", "b").replaceAll("\"", "c");
-        document.cookie = "z=" + jsonkey + ";expires=" + d.toUTCString() + "; path=/";
-        document.cookie = "z=" + jsonkey + "; path=/";
+        document.cookie = "cart=" + btoa(JSON.stringify(cartItems)) + ";expires=" + d.toUTCString() + "; path=/";
         getCookie();
-        if (cart.size === 0) {
+        if (cartItems.length === 0) {
             carSl.style.visibility = "hidden";
-            cartPop.style.visibility = "hidden";
+            cartPop.classList.remove("show");
+            cartPop.classList.remove("hide");
         }
     }
     buttonX.style.cursor = "pointer";
@@ -54,55 +69,40 @@ let createCart = (ma, soLuong) => {
     buttonX.style.color = "#181a1b";
     buttonX.style.width = "15%";
     buttonX.style.padding = "10px";
-    buttonX.style.marginRight = "7%";
+    buttonX.style.textAlign = "center";
     anh.src = listsp[ma].link;
     anh.style.maxWidth = "15%";
     anh.style.objectFit = "contain";
     anh.style.marginRight = "10px";
     anh.style.marginLeft = "7%";
-    ten.appendChild(document.createTextNode(listsp[ma].ten + "   (x" + soLuong + ")"));
+    ten.innerHTML = "<h5 style='margin: 9px 0 3px 0'>" + listsp[ma].ten + "</h5>" +
+        "<h5 style='margin: 3px 0 9px 0;text-align: center'><span style='color: " + mausac + "'>" + mausac + "</span> size: " + size + " sl: " + soLuong + "</h5>";
     div.appendChild(anh);
     div.appendChild(ten);
     div.appendChild(buttonX);
-    element.appendChild(div);
+    cartItemsist.appendChild(div);
 }
 let getCookie = () => {
-    cart.clear();
-    while (element.firstChild) {
-        element.removeChild(element.lastChild);
+    cartItems.splice(0, cartItems.length);
+    while (cartItemsist.firstChild) {
+        cartItemsist.removeChild(cartItemsist.lastChild);
     }
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
     for (let i = 0; i < ca.length; i++) {
-        if (ca[i].includes("z=") && ca[i].length > 3) {
-            ca[i] = ca[i].replaceAll("z=", "");
-            let text = ca[i].split('a');
-            for (let j = 0; j < text.length; j++) {
-                let context = text[j].split('b');
-                let ma = context[0].replaceAll("c", "").trim() + "";
-                let soLuong = parseInt(context[1]);
-                cart.set(ma, soLuong);
-                createCart(ma, soLuong);
-            }
-
-            const div = document.createElement("div");
-            const buttonDH = document.createElement("button");
-            buttonDH.innerHTML = "Đặt hàng";
-            buttonDH.classList.add("link-description");
-            buttonDH.style.color = "#181a1b";
-            buttonDH.style.marginBottom = "5px";
-            buttonDH.style.cursor = "pointer";
-            buttonDH.onclick = () => location.href = location.protocol + '//' + location.host + "/dathang";
-            div.appendChild(buttonDH);
-            element.appendChild(div);
-
+        if (ca[i].includes("cart=") && ca[i].length > 8) {
+            cartItems = JSON.parse(atob(ca[i].replace("cart=", "")));
+            cartItems.forEach(value => createCart(value.product_id, value.soluong, value.mausac, value.size));
         }
     }
     total = 0;
-    cart.forEach(value => total += value);
+    cartItems.forEach(value => total += value.soluong);
     if (total !== 0) {
         carSl.innerHTML = total;
         carSl.style.visibility = "visible";
+    } else {
+        cartPop.classList.remove("showcart");
+        cartPop.classList.add("hidecart");
     }
 }
 
@@ -118,21 +118,24 @@ let scrollChat = () => {
         clearTimeout(sc);
 }
 let chatArea = document.getElementById("chat-area");
+let chatHistory = document.getElementById("chat-history");
 let chatEnter = false;
 let firstShow = false;
 let showchat = () => {
     if (chatArea.classList.contains("show")) {
         chatArea.classList.remove("show");
         chatArea.classList.add("hide");
+        chatHistory.style.visibility = "hidden";
         chatEnter = false;
     } else {
         chatEnter = true;
         chatArea.classList.add("show");
+        chatHistory.style.visibility = "visible";
         if (chatArea.classList.contains("hide"))
             chatArea.classList.remove("hide");
     }
 }
-let chatHistory = document.getElementById("chat-history");
+
 setInterval(() => {
     if (chatEnter) {
         const xhttp = new XMLHttpRequest();
@@ -146,14 +149,13 @@ setInterval(() => {
                 chat.innerHTML = "Trò chuyện cùng chúng tôi...";
                 chat.classList.add("chat-line1");
                 chatHistory.appendChild(chat);
-            }
-            else if (kq === "false") {
+            } else if (kq === "false") {
                 const chat = document.createElement("h4");
                 chat.innerHTML = "Đăng nhập để trò chuyện cùng chúng tôi...";
                 chat.classList.add("chat-line1");
                 chatHistory.appendChild(chat);
                 noiDungChat.disabled = true;
-            }else {
+            } else {
                 let listText = kq.split("|z|");
                 listText.forEach(value => {
                     if (value.startsWith("|a|")) {

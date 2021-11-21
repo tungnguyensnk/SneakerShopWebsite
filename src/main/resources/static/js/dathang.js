@@ -43,5 +43,5 @@ let dathang = () => {
     }
     xhttp.open("POST", location.protocol + '//' + location.host + "/dathang");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("keydh=" + keydh);
+    xhttp.send();
 }

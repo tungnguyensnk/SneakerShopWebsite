@@ -1,6 +1,9 @@
 package com.tung.projectdb.controller;
 
 import com.tung.projectdb.model.*;
+import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +12,11 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.Collections;
+import java.util.Formatter;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Controller
 public class MainController {
@@ -52,6 +59,17 @@ public class MainController {
             model.addAttribute("name", "");
             model.addAttribute("isLogin", false);
         }
+        double sao = Data.getContext().getBean(NhanxetRepository.class).getSaoAVG(id) != null ?
+                Data.getContext().getBean(NhanxetRepository.class).getSaoAVG(id) : 0;
+        if ((sao - Math.floor(sao)) > 0.75)
+            sao = Math.floor(sao) + 1;
+        else if ((sao - Math.floor(sao)) < 0.25)
+            sao = Math.floor(sao);
+        else
+            sao = Math.floor(sao) + 0.5;
+        LinkedList<Nhanxet> listNX = Data.getContext().getBean(NhanxetRepository.class).getNhanXet(id);
+        model.addAttribute("sao", sao);
+        model.addAttribute("listNX", listNX);
         return "thongtinsp";
     }
 
@@ -225,6 +243,19 @@ public class MainController {
         }
         Collections.reverse(listDonHang);
         model.addAttribute("listdh", listDonHang);
+
+        LinkedList<Integer> nhanXet = new LinkedList<>();
+        LinkedList<Integer> nhanXetButton = new LinkedList<>();
+        LinkedList<Nhanxet> list = Data.getContext().getBean(NhanxetRepository.class).getFullNhanXet(taiKhoan.getId());
+        list.forEach(nhanxet -> nhanXet.add(nhanxet.getChitietdon().getId()));
+        listDonHang.forEach(donHang -> {
+            if (donHang.getList().size() != Data.getContext().getBean(NhanxetRepository.class).getTotalNhanXetOfOrder(donHang.getId()))
+                nhanXetButton.add(donHang.getId());
+        });
+        model.addAttribute("nhanxet", nhanXet);
+        model.addAttribute("nhanxetcount", nhanXetButton);
+
+        model.addAttribute("trahang",Data.getContext().getBean(TrahangRepository.class).getTraHangByUser(taiKhoan.getId()));
         return "kiemtra";
     }
 
@@ -245,7 +276,7 @@ public class MainController {
 
     @SuppressWarnings("SpringMVCViewInspection")
     @GetMapping("/dathang")
-    public String checkDatHang(Model model, @CookieValue(value = "key", defaultValue = "") String key, @CookieValue(value = "z", defaultValue = "") String z) {
+    public String checkDatHang(Model model, @CookieValue(value = "key", defaultValue = "") String key, @CookieValue(value = "cart", defaultValue = "") String cart) {
         model.addAttribute("items", Data.getItems());
         model.addAttribute("active", "index");
         model.addAttribute("text", "Đặt Hàng");
@@ -257,30 +288,25 @@ public class MainController {
             model.addAttribute("isLogin", false);
             return "redirect:dangnhap";
         }
-        if (z.equals(""))
+        if (cart.equals(""))
             model.addAttribute("isEmpty", true);
         else {
             model.addAttribute("isEmpty", false);
-            String[] list = z.split("a");
             TaiKhoan cur = Data.getTaiKhoanByKey(key);
-            int tongtien = 0;
-            if (cur != null) {
-                Map<Item, Integer> don = new HashMap<>();
-                for (String hang : list) {
-                    int ma = Integer.parseInt(hang.split("b")[0].replaceAll("c", ""));
-                    int soLuong = Integer.parseInt(hang.split("b")[1]);
-                    Item item = Data.getItemByKey(ma);
-                    if (item != null) {
-                        don.put(item, soLuong);
-                        tongtien += (item.getSoLuong() > soLuong) ? item.getGia() * soLuong : item.getGia() * item.getSoLuong();
-                    }
-                }
-                model.addAttribute("cur", cur);
-                model.addAttribute("donhang", don);
-                model.addAttribute("keydh", z);
-                model.addAttribute("tongtien", tongtien);
-            }
-
+            AtomicInteger tongtien = new AtomicInteger();
+            JSONArray listSP = new JSONArray(new String(new Base64().decode(cart.getBytes())));
+            LinkedList<Chitietdon> don = new LinkedList<>();
+            listSP.forEach(o -> {
+                Item item = Data.getItemByKey(((JSONObject) o).getInt("product_id"));
+                int soluong = ((JSONObject) o).getInt("soluong");
+                don.add(new Chitietdon(item, soluong, ((JSONObject) o).getString("mausac"), ((JSONObject) o).getInt("size")));
+                assert item != null;
+                tongtien.addAndGet(item.getGia() * Math.min(item.getSoLuong(), soluong));
+            });
+            model.addAttribute("cur", cur);
+            model.addAttribute("donhang", don);
+            model.addAttribute("keydh", cart);
+            model.addAttribute("tongtien", tongtien.get());
         }
         return "dathang";
     }
@@ -309,7 +335,7 @@ public class MainController {
     @GetMapping("/ReturnUrl")
     public String returnUrl(@RequestParam("vnp_ResponseCode") String code, @RequestParam("vnp_TxnRef") int orderId) {
         if (code.equals("00"))
-            Data.getContext().getBean(DonHangRepository.class).upTrangThai("Đã Thanh Toán. Đang Chuẩn Bị Hàng", orderId);
+            Data.getContext().getBean(DonHangRepository.class).upTrangThai("Đã thanh toán. Đang chuẩn bị hàng", orderId);
         return "redirect:/kiemtra";
     }
 

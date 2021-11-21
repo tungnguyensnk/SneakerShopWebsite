@@ -25,4 +25,21 @@ public class Chitietdon {
 
     @Column(name = "soluong")
     private Integer soluong;
+
+    @Column(name = "mausac", length = 20)
+    private String mausac;
+
+    @Column(name = "kichco")
+    private Integer kichco;
+
+    public Chitietdon(Item product, Integer soluong, String mausac, Integer kichco) {
+        this.product = product;
+        this.soluong = soluong;
+        this.mausac = mausac;
+        this.kichco = kichco;
+    }
+
+    public Chitietdon() {
+
+    }
 }

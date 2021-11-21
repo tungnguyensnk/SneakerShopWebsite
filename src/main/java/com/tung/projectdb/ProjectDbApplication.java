@@ -18,7 +18,6 @@ public class ProjectDbApplication {
         Data.setItems(itemRepository.getAll());
         TaiKhoanRepository taiKhoanRepository = context.getBean(TaiKhoanRepository.class);
         Data.setTaiKhoans(taiKhoanRepository.findAll());
-
     }
 
 }

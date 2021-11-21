@@ -91,8 +91,11 @@ input:focus {
     grid-column: 7/9;
     padding-left: 20%;
     font-size: 30px;
-    cursor: pointer;
     overflow: visible;
+}
+
+#cartic {
+    cursor: pointer;
 }
 
 .cart-sl {
@@ -126,6 +129,77 @@ input:focus {
     flex-direction: column;
     align-items: center;
 
+}
+
+#cart-list {
+    overflow-y: auto;
+    width: 100%;
+    max-height: 300px;
+}
+
+#cart-list > div {
+    width: 285px;
+}
+
+.sizeform {
+    position: absolute;
+    height: 150px;
+    width: 250px;
+    background-color: #222222;
+    border-radius: 10px;
+    z-index: 50;
+    visibility: hidden;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.sizeform:before {
+    content: "";
+    position: absolute;
+    top: 60px;
+    left: -30px;
+    z-index: 50;
+    border: solid 15px transparent;
+    border-right: solid 15px #222222;
+}
+
+@keyframes show-form {
+    from {
+        max-width: 0;
+        opacity: 0;
+    }
+    to {
+        max-width: 250px;
+        opacity: 1;
+    }
+}
+
+.showform {
+    visibility: visible !important;
+    animation-name: show-form;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hide-form {
+    from {
+        max-width: 250px;
+        opacity: 1;
+    }
+    to {
+        max-width: 100px;
+        opacity: 0;
+    }
+}
+
+.hideform {
+    visibility: visible !important;
+    animation-name: hide-form;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
 }
 
 .top-nav {
@@ -448,19 +522,21 @@ ul li {
 }
 
 .gio-hang {
-    width: 40%;
-    margin: 0 30%;
+    width: 50%;
+    margin: 0 25%;
 }
 
 .item-don-hang {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: row;
 }
+.des-don-hang {
 
+}
 .img-don-hang {
-    max-width: 40%;
+    width: 30%;
     object-fit: contain;
     margin: 10px 0;
 }
@@ -562,22 +638,21 @@ ul li {
     border: 1px solid rgb(113, 73, 46);
     box-sizing: border-box;
     opacity: 0;
-    display: none;
+    visibility: hidden;
 }
 
 @keyframes show-chat {
     from {
-        transform: scale(0);
+        height: 50px;
         opacity: 0;
     }
     to {
-        transform: scale(1);
         opacity: 1;
     }
 }
 
 .show {
-    display: block !important;
+    visibility: visible !important;
     animation-name: show-chat;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
@@ -585,18 +660,53 @@ ul li {
 
 @keyframes hide-chat {
     from {
-        transform: scale(1);
         opacity: 1;
     }
     to {
-        transform: scale(0);
+        height: 50px;
         opacity: 0;
     }
 }
 
 .hide {
-    display: block !important;
+    visibility: visible !important;
     animation-name: hide-chat;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes show-cart {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 350px;
+        opacity: 1;
+    }
+}
+
+.showcart {
+    visibility: visible !important;
+    animation-name: show-cart;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hide-cart {
+    from {
+        max-height: 350px;
+        opacity: 1;
+    }
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+.hidecart {
+    visibility: visible !important;
+    animation-name: hide-cart;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
 }
@@ -655,4 +765,107 @@ ul li {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #c94118;
+}
+
+#set-mau {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    margin: 10px;
+}
+
+#set-mau input[type="radio"] {
+    appearance: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: solid 3px transparent;
+    box-sizing: border-box;
+}
+
+input[id="red"] {
+    background-color: red;
+}
+
+input[id="red"]:checked {
+    outline: solid 3px red;
+}
+
+input[id="brown"] {
+    background-color: brown;
+}
+
+input[id="brown"]:checked {
+    outline: solid 3px brown;
+}
+
+input[id="yellow"] {
+    background-color: yellow;
+}
+
+input[id="yellow"]:checked {
+    outline: solid 3px yellow;
+}
+
+input[id="aqua"] {
+    background-color: aqua;
+}
+
+input[id="aqua"]:checked {
+    outline: solid 3px aqua;
+}
+
+input[id="white"] {
+    background-color: white;
+}
+
+input[id="white"]:checked {
+    outline: solid 3px white;
+}
+
+.rating {
+    position: relative;
+    width: 180px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3em;
+    padding: 5px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 2px #b3acac;
+}
+
+.rating-sub {
+    position: relative;
+    width: 450px;
+    overflow: visible;
+    word-break: break-all;
+    border-radius: 5px;
+    border-right: solid 1px deepskyblue;
+    border-left: solid 1px deepskyblue;
+    margin: auto;
+}
+
+.rating-star {
+    font-size: 1.3em;
+    cursor: pointer;
+    color: #dabd18b2;
+    transition: filter linear .3s;
+}
+
+.rating-star:hover, .star-click {
+    filter: drop-shadow(1px 1px 4px gold);
+}
+
+.nx-line {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    height: 150px;
+    margin: 15px;
+    border-radius: 20px;
+    justify-content: flex-start;
+    align-items: center;
 }

@@ -206,3 +206,59 @@
 .tab-pane.activ {
     display: block;
 }
+
+.review-area{
+    text-align: center;
+    width: 100%;
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+}
+
+@keyframes show-review {
+    from{
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 140px;
+        opacity: 1;
+    }
+}
+
+.review-show{
+    display: block !important;
+    animation-name: show-review;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hide-review {
+    from{
+        max-height: 140px;
+        opacity: 1;
+    }
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+.review-hide{
+    display: block !important;
+    animation-name: hide-review;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+textarea {
+    border-radius: 10px;
+    border: solid 1px chocolate;
+    margin: 10px;
+    resize: none;
+    outline: none;
+}
+textarea::placeholder {
+    text-align: center;
+}
+

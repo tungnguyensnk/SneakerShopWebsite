@@ -3,23 +3,22 @@ package com.tung.projectdb.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.scheduling.annotation.Async;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 @lombok.Data
 public class Data {
     @Getter
     @Setter
-    private static List<Item> items ;
+    private static List<Item> items;
 
     @Setter
     @Getter
-    private static List<TaiKhoan> taiKhoans ;
+    private static List<TaiKhoan> taiKhoans;
 
     @Getter
     @Setter
@@ -52,5 +51,4 @@ public class Data {
         }
         return null;
     }
-
 }

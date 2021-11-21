@@ -27,17 +27,23 @@
     <div class="gio-hang">
         <th:block th:each="dh : ${donhang}">
             <div class="item-don-hang">
-                <img th:src="${base}+'/'+${dh.getKey().getLinkAnh()}" class="img-don-hang">
-                <div style="display: flex;flex-direction: row;margin-left: 15px;"><h4 class="des-don-hang"
-                                                                                     style="margin-right: 5px"
-                                                                                     th:text="${dh.getKey().getTen()} +' '"></h4>
+                <img th:src="${base}+'/'+${dh.getProduct().getLinkAnh()}" class="img-don-hang">
+                <div style="display: flex;flex-direction: row;margin-left: 15px;flex-basis: 200px;justify-content: flex-end">
+                    <div style="text-align: center;width: 180px">
+                        <h4 class="des-don-hang" style="margin: auto" th:text="${dh.getProduct().getTen()}"></h4>
+                        <h4 th:style="'color: '+${dh.getMausac()}+';margin:5px'" th:text="${dh.getMausac()}"></h4>
+                        <h4 style="margin: 0" th:text="' size: '+${dh.getKichco()}"></h4>
+                    </div>
                     <h4 class="des-don-hang" style="text-decoration: line-through"
-                        th:if="${dh.getValue()}>${dh.getKey().getSoLuong()}" th:text="'(x'+${dh.getValue()}+')'"></h4>
-                    <h4 class="des-don-hang" th:if="(${dh.getValue()}<=${dh.getKey().getSoLuong()})?(${dh.getKey().getSoLuong()}>0):false"
-                        th:text="'(x'+${dh.getValue()}+')'"></h4>
-                    <h4 class="des-don-hang" th:if="(${dh.getValue()}>${dh.getKey().getSoLuong()})?(${dh.getKey().getSoLuong()}>0):false"
-                        style="color: crimson;margin-left: 5px" th:text="'(x'+${dh.getKey().getSoLuong()}+')'"></h4>
-                    <h4 class="des-don-hang" th:if="${dh.getKey().getSoLuong()}==0"
+                        th:if="${dh.getSoluong()}>${dh.getProduct().getSoLuong()}"
+                        th:text="'(x'+${dh.getSoluong()}+')'"></h4>
+                    <h4 class="des-don-hang"
+                        th:if="(${dh.getSoluong()}<=${dh.getProduct().getSoLuong()})?(${dh.getProduct().getSoLuong()}>0):false"
+                        th:text="'(x'+${dh.getSoluong()}+')'"></h4>
+                    <h4 class="des-don-hang"
+                        th:if="(${dh.getSoluong()}>${dh.getProduct().getSoLuong()})?(${dh.getProduct().getSoLuong()}>0):false"
+                        style="color: crimson;margin-left: 5px" th:text="'(x'+${dh.getProduct().getSoLuong()}+')'"></h4>
+                    <h4 class="des-don-hang" th:if="${dh.getProduct().getSoLuong()}==0"
                         style="color: crimson;margin-left: 5px" th:text="'(Hết hàng)'"></h4>
                 </div>
             </div>
@@ -52,7 +58,8 @@
     <h4 style="text-align: center" th:text="'Địa chỉ: '+${cur.getDiaChi()}"></h4>
     <div>
         <form class="form">
-            <input type="button" id="buttondn" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''" value="Tạo Đơn & Thanh Toán" onclick="dathang()">
+            <input type="button" id="buttondn" th:style="(${tongtien}==0) ? 'pointer-events: none;': ''"
+                   value="Tạo Đơn & Thanh Toán" onclick="dathang()">
         </form>
     </div>
     <h4 style="text-align: center" id="thong-bao"></h4>

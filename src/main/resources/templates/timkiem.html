@@ -25,7 +25,8 @@
                                                                  class="img-in-list"></a>
             <h3 th:text="${item.getTen()}" style="text-align: center;margin: 5px"></h3>
             <h3 th:text="${item.getGia()} +' $'" style="text-align: center;color: rgb(117, 76, 48);margin: 5px"></h3>
-            <button class="button-in-list" th:onclick="'addCart('+${item.getId()}+')'">
+            <button class="button-in-list" th:idsp="${item.getId()}"
+                    onclick="showSizeForm(this.getAttribute('idsp'),this.getBoundingClientRect().top + document.documentElement.scrollTop,this.getBoundingClientRect().left)">
                 <h3 style="margin: auto;color: aliceblue;">Thêm vào giỏ</h3>
             </button>
         </div>

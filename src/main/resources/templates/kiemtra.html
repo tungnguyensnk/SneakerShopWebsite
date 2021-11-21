@@ -21,7 +21,7 @@
 <div th:unless="${isEmpty}">
     <th:block th:each="donhang : ${listdh}">
         <div class="btn">
-            <div class="gio-hang">
+            <div class="gio-hang" th:id="'d'+${donhang.getId()}">
                 <h3 style="text-align: center"
                     th:text="'Thông Tin Đơn Hàng #'+${donhang.getId()}"></h3>
                 <h4 style="text-align: center" th:text="'Trạng thái: '+${donhang.getTrangthaidon()}"></h4>
@@ -31,25 +31,60 @@
                     th:text="'Ngày hẹn giao: '+${donhang.getNgayhengiao()==null ? 'Chưa duyệt' : donhang.getNgayhengiao()}"></h4>
                 <th:block th:each="dh : ${donhang.getList()}">
                     <div class="item-don-hang">
-                        <img th:src="${base}+'/'+${dh.getProduct().getLinkAnh()}" class="img-don-hang">
-                        <div style="display: flex;flex-direction: row;margin-left: 15px"><h4 class="des-don-hang"
-                                                                                             style="margin-right: 5px"
-                                                                                             th:text="${dh.getProduct().getTen()} +' '"></h4>
-                            <h4 class="des-don-hang" th:text="'(x'+${dh.getSoluong()}+')'"></h4>
+                        <img th:src="${base}+'/'+${dh.getProduct().getLinkAnh()}" class="img-don-hang"
+                             th:idsp="${dh.getProduct().getId()}"
+                             onclick="location.href = location.protocol + '//' + location.host + '/sanpham/'+this.getAttribute('idsp')"
+                             style="cursor: pointer">
+                        <div style="display: flex;flex-direction: row;margin-left: 15px;flex-basis: 200px;justify-content: flex-end">
+                            <div style="text-align: center;width: 180px">
+                                <h4 class="des-don-hang" style="margin: auto"
+                                    th:text="${dh.getProduct().getTen()}"></h4>
+                                <h4 th:style="'color: '+${dh.getMausac()}+';margin:5px'"
+                                    th:text="${dh.getMausac()}"></h4>
+                                <h4 style="margin: 0"
+                                    th:text="' size: '+${dh.getKichco()}+' sl: '+${dh.getSoluong()}"></h4>
+                            </div>
                         </div>
+                    </div>
+                    <div class="review-area" th:id="'h'+${dh.getId()}" th:if="${!nhanxet.contains(dh.getId())}">
+                        <div>
+                            <i class="rating-star far fa-star" th:onclick="'checkSao('+${dh.getId()}+',1)'" th:sao="0"></i>
+                            <i class="rating-star far fa-star" th:onclick="'checkSao('+${dh.getId()}+',2)'"></i>
+                            <i class="rating-star far fa-star" th:onclick="'checkSao('+${dh.getId()}+',3)'"></i>
+                            <i class="rating-star far fa-star" th:onclick="'checkSao('+${dh.getId()}+',4)'"></i>
+                            <i class="rating-star far fa-star" th:onclick="'checkSao('+${dh.getId()}+',5)'"></i>
+                        </div>
+                        <label>
+                            <textarea placeholder="Review gì đó..." rows="3" cols="30"></textarea>
+                        </label>
+                        <button class="button-in-list"
+                                th:onclick="'sendReview('+${dh.getId()}+','+${dh.getProduct().getId()}+')'">
+                            <h3 style="margin: auto;color: aliceblue;border-radius: 15px">Gửi đánh giá</h3>
+                        </button>
+                        <div style="width:100%;height: 1px;border-bottom: solid 1px chocolate;margin-bottom: 15px"></div>
                     </div>
                 </th:block>
             </div>
             <h4 style="text-align: center" th:text="'Tổng tiền: '+${donhang.getTotal()}+'$'"></h4>
             <button class="button-in-list"
                     th:onclick="'thanhtoan('+${donhang.getId()}+')'"
-                    th:if="${donhang.getTrangthaidon().trim()} == 'Chưa Thanh Toán'">
+                    th:if="${donhang.getTrangthaidon().trim()} == 'Chưa thanh toán'">
                 <h3 style="margin: auto;color: aliceblue;">Thanh toán</h3>
             </button>
             <button class="button-in-list"
                     th:onclick="'huydon('+${donhang.getId()}+')'"
-                    th:if="${!donhang.getTrangthaidon().trim().equals('Đơn đã hủy.') && !donhang.getTrangthaidon().trim().equals('Giao hàng thành công.') && !donhang.getTrangthaidon().trim().equals('Đang giao hàng')}">
+                    th:if="${donhang.getTrangthaidon().trim().equals('Chưa thanh toán') || donhang.getTrangthaidon().trim().equals('Đã thanh toán. Đang chuẩn bị hàng')}">
                 <h3 style="margin: auto;color: aliceblue;">Hủy đơn hàng</h3>
+            </button>
+            <button class="button-in-list" th:id="'t'+${donhang.getId()}"
+                    th:onclick="'trahang('+${donhang.getId()}+')'"
+                    th:if="${donhang.getTrangthaidon().trim().equals('Giao hàng thành công.') && !trahang.contains(donhang.getId())}">
+                <h3 style="margin: auto;color: aliceblue;">Trả hàng & Hoàn tiền</h3>
+            </button>
+            <button class="button-in-list" th:id="'r'+${donhang.getId()}"
+                    th:onclick="'review('+${donhang.getId()}+')'"
+                    th:if="${donhang.getTrangthaidon().trim().equals('Giao hàng thành công.') && nhanxetcount.contains(donhang.getId())}">
+                <h3 style="margin: auto;color: aliceblue;">Đánh giá</h3>
             </button>
             <h3 style="text-align: center;margin-top: 20px">Thông Tin Người Đặt Hàng</h3>
             <h4 style="text-align: center" th:text="'Người đặt hàng: '+${cur.getTen()}"></h4>
@@ -61,6 +96,7 @@
 <div th:if="${isEmpty}">
     <h3 style="text-align: center">Không có đơn hàng.</h3>
 </div>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <script th:src="${base}+'/js/kiemtra.js'"></script>
 <div th:replace="index :: footer"></div>
 </body>
