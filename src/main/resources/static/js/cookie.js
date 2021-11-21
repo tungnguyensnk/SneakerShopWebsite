@@ -102,7 +102,7 @@ let getCookie = () => {
         carSl.style.visibility = "visible";
     } else {
         cartPop.classList.remove("showcart");
-        cartPop.classList.add("hidecart");
+        //cartPop.classList.add("hidecart");
     }
 }
 
