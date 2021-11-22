@@ -21,7 +21,7 @@ public class ProjectDbApplication {
         Data.setTaiKhoans(taiKhoanRepository.findAll());
         new Thread(() -> {
             int i=0;
-            while (i<10000) {
+            while (i<100000) {
                 context.getBean(DonHangRepository.class).findAll().forEach(donHang ->
                         context.getBean(DonHangRepository.class).upTrangThai("Giao hàng thành công.",donHang.getId()));
                 System.out.println("oke");
