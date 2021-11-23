@@ -32,14 +32,13 @@ let thanhtoan = id => {
 
 }
 
-let listStar = document.getElementsByClassName("rating-star");
+
 let fac = document.getElementsByClassName("fac").item(0).classList;
 fac.remove("fa");
 fac.add("fab");
 
 
 let trahang = orderId => {
-    document.getElementById("t" + orderId).remove();
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         let kq = this.responseText;
@@ -49,6 +48,7 @@ let trahang = orderId => {
                 message: "Hãy đợi chủ cửa hàng liên hệ lại cho bạn.",
                 type: "success",
             });
+            document.getElementById("t" + orderId).remove();
         } else
             toast({
                 title: "Lỗi",
@@ -78,7 +78,7 @@ let checkSao = (hangId, saoId) => {
     sao[4] = document.querySelector("#h" + hangId + " > div:nth-child(1) > i:nth-child(5)");
 
     let taiCho = false;
-    if (sao[saoId - 1].classList.contains("fas") && sao[saoId].classList.contains("far"))
+    if (sao[saoId - 1].classList.contains("fas") && (saoId === 5 || sao[saoId].classList.contains("far")))
         taiCho = true;
 
     for (let i = 0; i < 5; i++) {
@@ -129,6 +129,6 @@ let sendReview = (ctdId, productId) => {
     }
     xhttp.open("POST", location.protocol + '//' + location.host + "/guireview");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("id=" + productId + "&sao=" + sao + "&nd=" + noiDung+"&ctdid="+ctdId);
+    xhttp.send("id=" + productId + "&sao=" + sao + "&nd=" + noiDung + "&ctdid=" + ctdId);
 
 }

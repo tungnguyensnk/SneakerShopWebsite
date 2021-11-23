@@ -20,10 +20,12 @@ public class ProjectDbApplication {
         TaiKhoanRepository taiKhoanRepository = context.getBean(TaiKhoanRepository.class);
         Data.setTaiKhoans(taiKhoanRepository.findAll());
         new Thread(() -> {
-            int i=0;
-            while (i<100000) {
-                context.getBean(DonHangRepository.class).findAll().forEach(donHang ->
-                        context.getBean(DonHangRepository.class).upTrangThai("Giao hàng thành công.",donHang.getId()));
+            int i = 0;
+            while (i < 100000) {
+                context.getBean(DonHangRepository.class).findAll().forEach(donHang -> {
+                    if (donHang.getTrangthaidon().equals("Chưa thanh toán"))
+                        context.getBean(DonHangRepository.class).upTrangThai("Giao hàng thành công.", donHang.getId());
+                });
                 System.out.println("oke");
                 try {
                     i++;

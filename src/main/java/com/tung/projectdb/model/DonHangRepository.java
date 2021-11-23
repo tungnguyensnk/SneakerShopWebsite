@@ -28,4 +28,7 @@ public interface DonHangRepository extends JpaRepository<DonHang, Integer> {
     @Query(value = "select * from donhang where user_id = ?1 order by id", nativeQuery = true)
     LinkedList<DonHang> getDonHang(int userid);
 
+    @Query(nativeQuery = true, value = "select distinct d.id from donhang d join chitietdon c on d.id = c.order_id " +
+            "left join nhanxet n on c.id = n.chitietdon_id where n.id is null and d.user_id = ?1")
+    LinkedList<Integer> getOrderNotCommentYet(int userId);
 }

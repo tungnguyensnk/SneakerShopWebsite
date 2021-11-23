@@ -532,9 +532,11 @@ ul li {
     justify-content: flex-start;
     flex-direction: row;
 }
+
 .des-don-hang {
 
 }
+
 .img-don-hang {
     width: 30%;
     object-fit: contain;
@@ -561,8 +563,8 @@ ul li {
 
 #img2 {
     position: absolute;
-    top: -5px;
-    left: 30px;
+    top: -10px;
+    left: 25px;
     width: 20px;
     background-color: chocolate;
 }
@@ -585,6 +587,7 @@ ul li {
 #btna1, #btna2, #btna3 {
     position: absolute;
     top: 0;
+    left: -3px;
     background: transparent;
     width: 76px;
     color: transparent;
@@ -600,19 +603,19 @@ ul li {
 }
 
 #divaa1:hover > #btna1 {
-    top: 25px;
+    top: 17px;
     color: rgb(232, 230, 227);
     background: #222222;
 }
 
 #divaa1:hover > #btna2 {
-    top: 53px;
+    top: 45px;
     color: rgb(232, 230, 227);
     background: #222222;
 }
 
 #divaa1:hover > #btna3 {
-    top: 81px;
+    top: 73px;
     color: rgb(232, 230, 227);
     background: #222222;
 }

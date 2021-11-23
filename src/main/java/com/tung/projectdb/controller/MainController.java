@@ -244,18 +244,14 @@ public class MainController {
         Collections.reverse(listDonHang);
         model.addAttribute("listdh", listDonHang);
 
-        LinkedList<Integer> nhanXet = new LinkedList<>();
-        LinkedList<Integer> nhanXetButton = new LinkedList<>();
-        LinkedList<Nhanxet> list = Data.getContext().getBean(NhanxetRepository.class).getFullNhanXet(taiKhoan.getId());
-        list.forEach(nhanxet -> nhanXet.add(nhanxet.getChitietdon().getId()));
-        listDonHang.forEach(donHang -> {
-            if (donHang.getList().size() != Data.getContext().getBean(NhanxetRepository.class).getTotalNhanXetOfOrder(donHang.getId()))
-                nhanXetButton.add(donHang.getId());
-        });
-        model.addAttribute("nhanxet", nhanXet);
-        model.addAttribute("nhanxetcount", nhanXetButton);
+        model.addAttribute("nhanxet",
+                Data.getContext().getBean(NhanxetRepository.class).getChiTietDonCommented(taiKhoan.getId()));
 
-        model.addAttribute("trahang",Data.getContext().getBean(TrahangRepository.class).getTraHangByUser(taiKhoan.getId()));
+        model.addAttribute("nhanxetcount",
+                Data.getContext().getBean(DonHangRepository.class).getOrderNotCommentYet(taiKhoan.getId()));
+
+        model.addAttribute("trahang",
+                Data.getContext().getBean(TrahangRepository.class).getTraHangByUser(taiKhoan.getId()));
         return "kiemtra";
     }
 

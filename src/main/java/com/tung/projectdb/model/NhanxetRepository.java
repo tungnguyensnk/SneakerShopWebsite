@@ -14,11 +14,8 @@ public interface NhanxetRepository extends JpaRepository<Nhanxet, Integer> {
     @Query(nativeQuery = true, value = "select avg(sao) from nhanxet where product_id = ?1")
     Double getSaoAVG(int productId);
 
-    @Query(nativeQuery = true, value = "select * from nhanxet where user_id = ?1")
-    LinkedList<Nhanxet> getFullNhanXet(int id);
-
-    @Query(nativeQuery = true, value = "select count(*) from nhanxet join donhang d on nhanxet.user_id = d.user_id where d.id = ?1")
-    int getTotalNhanXetOfOrder(int orderId);
+    @Query(nativeQuery = true, value = "select n.chitietdon_id from nhanxet n where n.user_id = 5")
+    LinkedList<Integer> getChiTietDonCommented(int userId);
 
     @Transactional
     @Modifying
