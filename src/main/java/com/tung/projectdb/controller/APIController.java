@@ -120,8 +120,8 @@ public class APIController {
             StringBuilder s = new StringBuilder();
             if (list.size() == 0)
                 return "null";
-            for (int i = 0; i < list.size(); i++) {
-                s.append(list.get(i).getNoidung()).append("|z|");
+            for (Chat chat : list) {
+                s.append(chat.getNoidung()).append("|z|");
             }
             return s.substring(0, s.length() - 3);
         }
